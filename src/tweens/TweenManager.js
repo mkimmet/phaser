@@ -204,7 +204,7 @@ var TweenManager = new Class({
      * @method Phaser.Tweens.TweenManager#add
      * @since 3.0.0
      *
-     * @param {object} config - [description]
+     * @param {object} config - Configuration settings for tween.  Some possible fields include: targets, x, y, delay, duration, ease, easeParams, hold, repeat, repeatDelay, yoyo, flipX, flipY, offset, completeDelay, loop, loopDelay, paused, useFrames, onStart, onComplete, onYoYo, onRepeat, callbackScope.
      *
      * @return {Phaser.Tweens.Tween} [description]
      */
