@@ -133,9 +133,7 @@ var Key = new Class({
         this.timeDown = 0;
 
         /**
-         * The number of milliseconds this key has been held down for.
-         * If the key is down this value holds the duration of that key press and is constantly updated.
-         * If the key is up it holds the duration of the previous down session.
+         * The number of milliseconds this key was held down for in the previous down - up sequence.
          *
          * @name Phaser.Input.Keyboard.Key#duration
          * @type {number}
@@ -185,6 +183,44 @@ var Key = new Class({
          * @since 3.0.0
          */
         this._justUp = false;
+
+        /**
+         * Internal tick counter.
+         *
+         * @name Phaser.Input.Keyboard.Key#_tick
+         * @type {number}
+         * @private
+         * @since 3.11.0
+         */
+        this._tick = -1;
+    },
+
+    /**
+     * Resets this Key object back to its default un-pressed state.
+     *
+     * @method Phaser.Input.Keyboard.Key.reset
+     * @since 3.6.0
+     * 
+     * @return {Phaser.Input.Keyboard.Key} This Key instance.
+     */
+    reset: function ()
+    {
+        this.preventDefault = true;
+        this.enabled = true;
+        this.isDown = false;
+        this.isUp = true;
+        this.altKey = false;
+        this.ctrlKey = false;
+        this.shiftKey = false;
+        this.timeDown = 0;
+        this.duration = 0;
+        this.timeUp = 0;
+        this.repeats = 0;
+        this._justDown = false;
+        this._justUp = false;
+        this._tick = -1;
+
+        return this;
     }
 
 });

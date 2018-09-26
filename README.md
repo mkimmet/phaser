@@ -13,7 +13,7 @@ Thousands of developers from indie and multi-national digital agencies, and univ
 **Visit:** The [Phaser website](https://phaser.io) and follow on [Twitter](https://twitter.com/phaser_) (#phaserjs)<br />
 **Learn:** [API Docs](https://github.com/photonstorm/phaser3-docs), [Support Forum][forum] and [StackOverflow](https://stackoverflow.com/questions/tagged/phaser-framework)<br />
 **Code:** 700+ [Examples](https://labs.phaser.io) (source available in this [repo][examples])<br />
-**Read:** Weekly [Phaser World](#newsletter) Newsletter<br />
+**Read:** The [Phaser World](#newsletter) Newsletter<br />
 **Chat:** [Slack](https://phaser.io/community/slack) and [Discord](https://phaser.io/community/discord)<br />
 **Extend:** With [Phaser Plugins](https://phaser.io/shop/plugins)<br />
 **Be awesome:** [Support](#support) the future of Phaser<br />
@@ -24,17 +24,25 @@ Grab the source and join the fun!
 
 <div align="center"><img src="https://phaser.io/images/github/news.jpg"></div>
 
-> 22nd March 2018
+> 20th September 2018
 
-**Updated:** I'm pleased to report that development continues at a rapid pace. We're slashing through issues and feature requests as quickly as possible, as well as improving the JSDocs across the entire API. 3.3.0 was released today and we'll launch directly into the next version. Check out the [Change Log](#changelog) for more details.
+Phaser 3.13 is now available. The main feature introduced in this release is the Facebook Instant Games Plugin. The plugin provides a seamless bridge between Phaser and version 6.2 of the Facebook Instant Games SDK. Every single SDK function is available via the plugin and we will keep track of the official SDK to make sure they stay in sync. My thanks to Facebook for helping make this possible.
+
+Also in this release is the brand new Shape Game Object, which allows for easy and quick addition of geometry onto the display list. Easily add rectangles, triangles, curves, stars and more into your game and treat them just like any other Game Object. Perfect for place-holder art, abstract style games or just really fast iterations game-jam style.
+
+It doesn't end there either. There are some important changes to Pointer Events, lots of updates and fixes and more documentation updates too. My thanks to the highly active community for helping out, reporting issues and providing PRs. I'd urge you to carefully read the Change Log, especially if upgrading from an earlier version in an existing project.
+
+3.13 yet again represents tireless effort on my part to get it fully production ready. I'm seeing lots more games being released with Phaser 3 and stacks of tutorials and plugins are starting to surface. My aim has always been to continue the mission of enhancing Phaser 3 as quickly as I can. It means releasing significant updates in relatively short periods of time. But it also means I'm jumping on bug reports as quickly as I can, keeping the issues list total nice and low (the vast majority of the items in there are feature requests now!) - a massive thank-you to all of you who support Phaser on Patreon and PayPal. It's your support that allows me to work on this full-time, to the benefit of everyone.
+
+As always, please check out the [Change Log](#changelog) for comprehensive details about what recent versions contain.
+
+**About Phaser 3**
 
 After 1.5 years in the making, tens of thousands of lines of code, hundreds of examples and countless hours of relentless work: Phaser 3 is finally out. It has been a real labor of love and then some!
 
-Please understand this is a bleeding-edge and brand new release. There are features we've had to leave out, areas of the documentation that need completing and so many cool new things we wanted to add. But we had to draw a line in the sand somewhere and 3.0.0 represents that.
+This has been a great new chapter in Phaser's life. I will continue to jump on bug reports as quickly as possible and ensure the releases keep flowing.
 
-For us this is just the start of a new chapter in Phaser's life. We will be jumping on bug reports as quickly as we can and releasing new versions rapidly. We've structured v3 in such a way that we can push out point releases as fast as needed.
-
-We publish our [Developer Logs](https://phaser.io/phaser3/devlog) in the weekly [Phaser World](https://phaser.io/community/newsletter) newsletter. Subscribe to stay in touch and get all the latest news from us and the wider Phaser community.
+If you'd like to stay abreast of developments then I publish the [Developer Logs](https://phaser.io/phaser3/devlog) in the [Phaser World](https://phaser.io/community/newsletter) newsletter. Subscribe to stay in touch and get all the latest news from the core team and the wider community.
 
 You can also follow Phaser on [Twitter](https://twitter.com/phaser_) and chat with fellow Phaser devs in our [Slack](https://phaser.io/community/slack) and [Discord](https://phaser.io/community/discord) channels.
 
@@ -64,13 +72,13 @@ Extra special thanks to our top-tier sponsors: [Orange Games](http://orangegames
 
 ![Sponsors](https://phaser.io/images/github/patreon-sponsors-2018-1.png "Top Patreon Sponsors")
 
-![Weekly Newsletter](https://phaser.io/images/github/div-newsletter.png "Weekly Newsletter")
+![Phaser Newsletter](https://phaser.io/images/github/div-newsletter.png "Phaser Newsletter")
 
 <div align="center"><img src="https://phaser.io/images/github/phaser-world.png"></div>
 
-Every week we publish the [Phaser World](https://phaser.io/community/newsletter) newsletter. It's packed full of the latest Phaser games, tutorials, videos, meet-ups, talks, and more. The newsletter also contains our weekly Development Progress updates which let you know about the new features we're working on.
+We publish the [Phaser World](https://phaser.io/community/newsletter) newsletter. It's packed full of the latest Phaser games, tutorials, videos, meet-ups, talks, and more. The newsletter also contains our weekly Development Progress updates which let you know about the new features we're working on.
 
-Over 100 previous editions can be found on our [Back Issues](https://phaser.io/community/backissues) page.
+Over 120 previous editions can be found on our [Back Issues](https://phaser.io/community/backissues) page.
 
 ![Download Phaser](https://phaser.io/images/github/div-download.png "Download Phaser")
 <a name="download"></a>
@@ -96,19 +104,20 @@ npm install phaser
 [Phaser is on jsDelivr](https://www.jsdelivr.com/projects/phaser) which is a "super-fast CDN for developers". Include the following in your html:
 
 ```html
-<script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.js"></script>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.13/dist/phaser.js"></script>
 ```
 
 or the minified version:
 
 ```html
-<script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.13/dist/phaser.min.js"></script>
 ```
 
 ### API Documentation
 
-1. Go to https://photonstorm.github.io/phaser3-docs/index.html to read the docs online.
-2. Checkout the [phaser3-docs](https://github.com/photonstorm/phaser3-docs) repository and then read the documentation by pointing your browser to the local `docs/` folder.
+Go to https://photonstorm.github.io/phaser3-docs/index.html to read the docs online. Use the drop-down menus at the top to navigate the name spaces, classes and Game Objects lists.
+
+Or, if you wish to run the docs locally you can checkout the [phaser3-docs](https://github.com/photonstorm/phaser3-docs) repository and then read the documentation by pointing your browser to the `docs/` folder.
 
 The documentation for Phaser 3 is an on-going project. Please help us by searching the Phaser code for any instance of the string `[description]` and then replacing it with some documentation.
 
@@ -117,6 +126,12 @@ The documentation for Phaser 3 is an on-going project. Please help us by searchi
 [TypeScript Definitions](https://github.com/photonstorm/phaser3-docs/tree/master/typescript) are now available.
 
 They are automatically generated from the jsdoc comments in the Phaser source code. If you wish to help refine them then you must edit the Phaser jsdoc blocks directly. You can find more details, including the source to the conversion tool we wrote in the Docs repo.
+
+As soon as we're happy with the accuracy of the TS defs we'll merge them into the main repo, for now, please download them from the docs repo, linked above, and add them to your project. When we release new versions of Phaser we publish new TS defs too.
+
+### Webpack
+
+We use Webpack to build Phaser and we take advantage of its conditional build flag feature to handle renderer swapping. If you wish to use Webpack with Phaser then please use our [Phaser 3 Project Template](https://github.com/photonstorm/phaser3-project-template) as it's already set-up to handle the build conditions Phaser needs. Recent changes to our build steps mean you should now be able to use any other packager, like Parcel, without any config changes.
 
 ### License
 
@@ -127,17 +142,54 @@ Phaser is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 <img src="https://phaser.io/images/github/learn.jpg" align="right">
 
-Phaser 3 is so brand new the "paint is still wet", but tutorials and guides are starting to come out!
+Tutorials and guides on Phaser 3 development are being published every week.
 
 * [Getting Started with Phaser 3](https://phaser.io/tutorials/getting-started-phaser3) (useful if you are completely new to Phaser)
 * [Making your first Phaser 3 Game](https://phaser.io/tutorials/making-your-first-phaser-3-game)
-* [Phaser 3 Bootstrap and Platformer Example](https://phaser.io/news/2018/02/phaser-3-bootstrap-platformer)
+* The [Complete Phaser 3 Game Development course](https://academy.zenva.com/product/html5-game-phaser-mini-degree/?a=13) contains over 15 hours of videos covering all kinds of important topics.
+* Plus, there are [over 700 Phaser tutorials](http://phaser.io/learn) listed on the official website.
 
 Also, please subscribe to the [Phaser World](https://phaser.io/community/newsletter) newsletter for details about new tutorials as they are published.
 
+### Facebook Instant Games
+
+Phaser 3.13 introduces the new [Facebook Instant Games](https://developers.facebook.com/docs/games/instant-games) Plugin. The plugin provides a seamless bridge between Phaser and version 6.2 of the Facebook Instant Games SDK. Every single SDK function is available via the plugin and we will keep track of the official SDK to make sure they stay in sync.
+
+The plugin offers the following features:
+
+* Easy integration with the Phaser Loader so load events update the Facebook progress circle.
+* Events for every plugin method, allowing the async calls of the SDK to be correctly inserted into the Phaser game flow. When SDK calls resolve they will surface naturally as a Phaser event and you'll know you can safely act upon them without potentially doing something mid-way through the game step.
+* All Plugin methods check if the call is part of the supported APIs available in the SDK, without needing to launch an async request first.
+* Instant access to platform, player and locale data.
+* Easily load player photos directly into the Texture Manager, ready for use with a Game Object.
+* Subscribe to game bots.
+* The plugin has a built-in Data Manager which makes dealing with data stored on Facebook seamless. Just create whatever data properties you need and they are automatically synced.
+* Support for FB stats, to retrieve, store and increment stats into cloud storage.
+* Save Session data with built-in session length validation.
+* Easy context switching, to swap between game instances and session data retrieval.
+* Easily open a Facebook share, invite, request or game challenge window and populate the text and image content using any image stored in the Texture cache.
+* Full Leaderboard support. Retrieve, scan and update leaderboard entries, as well as player matching.
+* Support for in-app purchases, with product catalogs, the ability to handle purchases, get past purchases and consume previously unlocked purchases.
+* Easily preload a set of interstitial ads, in both banner and video form, then display the ad at any point in your game, with in-built tracking of ads displayed and inventory available.
+* Plus other features, such as logging to FB Analytics, creating short cuts, switching games, etc.
+
+A special build of Phaser with the Facebook Instant Games Plugin ready-enabled is [available on jsDelivr](https://www.jsdelivr.com/projects/phaser). Include the following in your html:
+
+```html
+<script src="//cdn.jsdelivr.net/npm/phaser@3.13/dist/phaser-facebook-instant-games.js"></script>
+```
+
+or the minified version:
+
+```html
+<script src="//cdn.jsdelivr.net/npm/phaser@3.13/dist/phaser-facebook-instant-games.min.js"></script>
+```
+
+The build files are in the git repository in the `dist` folder, and you can also include the plugin in custom builds.
+
 ### Source Code Examples
 
-During our development of Phaser 3, we created hundreds of examples with the full source code and assets. Until these examples are fully integrated into the Phaser website, you can browse them on [Phaser 3 Labs](https://labs.phaser.io), or clone the [examples repo][examples]. Note: Not all examples work, sorry! We're tidying them up as fast as we can.
+During our development of Phaser 3, we created hundreds of examples with the full source code and assets ready available. Until these examples are fully integrated into the Phaser website, you can browse them on [Phaser 3 Labs](https://labs.phaser.io), or clone the [examples repo][examples]. We are constantly adding to and refining these examples.
 
 ### Create Your First Phaser 3 Example
 
@@ -235,7 +287,7 @@ Run it in your browser and you'll see the following:
 
 This is a tiny example, and there are hundreds more for you to explore, but hopefully it shows how expressive and quick Phaser is to use. With just a few easily readable lines of code, we've got something pretty impressive up on screen!
 
-Subscribe to our weekly newsletter for further tutorials and examples.
+Subscribe to our newsletter for further tutorials and examples.
 
 ![Building Phaser](https://phaser.io/images/github/div-building-phaser.png "Building Phaser")
 
@@ -243,131 +295,192 @@ There are both plain and minified compiled versions of Phaser in the `dist` fold
 
 ### Custom Builds
 
-Phaser 3 must be built using Webpack. We take advantage of a number of Webpack features and plugins which allow us to properly tailor the build process. You can elect exactly which features are bundled into your version of Phaser. We will release a tutorial covering the process shortly, but for now please look at our webpack config files to get an idea of the required settings.
+Phaser 3 is built using Webpack and we take advantage of the Webpack definePlugin feature to allow for conditional building of the Canvas and WebGL renderers and extra plugins. You can custom the build process to only include the features you require. Doing so can cut the main build file size down to just 70KB.
+
+Read our [comprehensive guide](https://phaser.io/phaser3/devlog/127) on creating Custom Builds of Phaser 3 for full details.
 
 ### Building from Source
 
 If you wish to build Phaser 3 from source, ensure you have the required packages by cloning the repository and then running `npm install`.
 
-You can then run `webpack` to create a development build in the `build` folder which includes source maps for local testing. You can also run `npm run dist` to create a minified packaged build in the `dist` folder.
+You can then run `webpack` to create a development build in the `build` folder which includes source maps for local testing. You can also `npm run dist` to create a minified packaged build in the `dist` folder. For a list of all commands available use `npm run help`.
 
 ![Change Log](https://phaser.io/images/github/div-change-log.png "Change Log")
 <a name="changelog"></a>
 
-## Version 3.3.0 - Tetsuo - 22nd March 2018
+# Change Log
 
-A special mention must go to @orblazer for their outstanding assistance in helping to complete the JSDoc data-types, callbacks and type defs across the API.
+## Version 3.13.0 - Yuuki - 20th September 2018
+
+### Facebook Instant Games Plugin
+
+Phaser 3.13 introduces the new Facebook Instant Games Plugin. The plugin provides a seamless bridge between Phaser and version 6.2 of the Facebook Instant Games SDK. Every single SDK function is available via the plugin and we will keep track of the official SDK to make sure they stay in sync.
+
+The plugin offers the following features:
+
+* Easy integration with the Phaser Loader so load events update the Facebook progress circle.
+* Events for every plugin method, allowing the async calls of the SDK to be correctly inserted into the Phaser game flow. When SDK calls resolve they will surface naturally as a Phaser event and you'll know you can safely act upon them without potentially doing something mid-way through the game step.
+* All Plugin methods check if the call is part of the supported APIs available in the SDK, without needing to launch an async request first.
+* Instant access to platform, player and locale data.
+* Easily load player photos directly into the Texture Manager, ready for use with a Game Object.
+* Subscribe to game bots.
+* The plugin has a built-in Data Manager which makes dealing with data stored on Facebook seamless. Just create whatever data properties you need and they are automatically synced.
+* Support for FB stats, to retrieve, store and increment stats into cloud storage.
+* Save Session data with built-in session length validation.
+* Easy context switching, to swap between game instances and session data retrieval.
+* Easily open a Facebook share, invite, request or game challenge window and populate the text and image content using any image stored in the Texture cache.
+* Full Leaderboard support. Retrieve, scan and update leaderboard entries, as well as player matching.
+* Support for in-app purchases, with product catalogs, the ability to handle purchases, get past purchases and consume previously unlocked purchases.
+* Easily preload a set of interstitial ads, in both banner and video form, then display the ad at any point in your game, with in-built tracking of ads displayed and inventory available.
+* Plus other features, such as logging to FB Analytics, creating short cuts, switching games, etc.
+
+The plugin is fully documented and official tutorials and project templates will follow shortly.
+
+### New Shape Game Objects
+
+Phaser 3.13 has a new Game Object called `Shape`, which by itself isn't much use because it's a base class. However, extending that class are 11 different types of Shape (with more to come) and you can use it to create your own custom Shapes as well. Shapes are added to the display list in the exact same way as any other Game Object. For example:
+
+```
+this.add.rectangle(400, 300, 500, 120, 0x00ff00);
+```
+
+Here we're creating a new Rectangle shape. It's positioned at 400 x 300 in the Scene and has a size of 500 x 120 pixels. The final value is the fill color.
+
+The thing to remember is that you can treat this Shape just like you'd treat any other Game Object. You can scale it, rotate it, alpha it, blend mode it, change its origin, give it a Camera scroll factor, put it inside a Container or Group, give it input abilities or even give it a physics body. It is, to all intents and purposes, a normal Game Object. The only difference is that when rendering it uses its own special bit of display code.
+
+The shapes available are as follows:
+
+* `GameObject.Arc` - The arc allows you to draw either a circle, or part of a circle. You can set the start and end angle, if the rotation is clockwise or not, and even set the number of iterations the arc will use during rendering.
+* `GameObject.Curve` - The Curve Shape can take any Phaser Curve object, such as a Spline or Bezier Curve, and add it to the display list.
+* `GameObject.Ellipse` - An ellipse shape, which is essentially a circle with a differing width and height. It can be filled or stroked (or both!) and as with the arc you can set the 'smoothness' of it, allowing you to decrease the number of points used when creating its polygon data.
+* `GameObject.Grid` - The Grid Shape object allows you to generate them. You can set the width and height of the grid itself, as well as for the grid cells. The grid can either have a single color, or alternating cell colors and even have outline spacing between the cells, or not.
+* `GameObject.Line` - Create a Line Shape drawn between any two points, with a color and thickness. In WebGL you can also specify a different thickness for the start and end of the line.
+* `GameObject.Polygon` - A Polygon is effectively a list of points that is drawn between. The points can be provided in a number of different ways (as Vec2 objects, as an array, etc) and then you can either fill or stroke the resulting shape, or both.
+* `GameObject.Rectangle` - Simple, but powerful and endlessly useful. Set a width and height and it'll display a Rectangle, with control over the size, fill color and stroke color.
+* `GameObject.Star` - The Star shape does as its name suggests: it displays a star. You can control the number of points in the star as well as the inner and outer radius of it.
+* `GameObject.Triangle` - A Triangular shape with full control over the points used to make it and its fill and stroke colors. Internally it uses the `batchFillTriangle` method in WebGL, making it actually faster to draw than a Quad! Use them happily for bullets or abstract space ships, or anything else you feel like.
+* `GameObject.IsoTriangle` - This draws an isometric triangle, like a pyramid. You can control the colors of each face, if the pyramid is upside down or not and the width and height of it.
+* `GameObject.IsoBox` - This draws an isometric box. You can set the colors for each face of the box, as well as the projection angle and also which of the 3 faces are drawn.
+
+All of the Shape objects render in both Canvas and WebGL and are available via the Game Object Factory.
+
+### Pointer and Input Event Updates
+
+The specificity if the input events has been changed to allow you more control over event handling. Previously, the InputPlugin would emit the global `pointerdown` event first, and then the Game Object itself would emit the `pointerdown` event and finally the InputPlugin would emit the `gameobjectdown` event.
+
+The order has now changed. The Game Object will dispatch its `pointerdown` event first. The InputPlugin will then dispatch `gameobjectdown` and finally the less specific of them all, `pointerdown` will be dispatched.
+
+New in 3.13 is the ability to cancel this at any stage. All events are now sent an event object which you can call `event.stopPropagation()` on. This will immediately stop any further listeners from being invoked. If you call `stopPropagation()` after the first Game Object `pointerdown` event, then no more Game Object's will receive their callbacks and the InputPlugin will not dispatch either of its events.
+
+This change has been introduced for `pointerdown`, `pointerup`, `pointermove`, `pointerover` and `pointerout`. No other data is included in the `event` object in this release.
+
+* The Game Object `pointerdown` callback signature has changed. It used to send `pointer, x, y, camera` to the listener. It now sends `pointer, x, y, event` to the listener. If you still need the `camera` property you can get it from `pointer.camera`.
+* The Game Object `gameobjectdown` callback signature has a new argument. It now sends `event` as the 3rd argument.
+* The `pointerdown` event, as dispatched by the InputPlugin, is now sent _after_ the Game Object specific events (`GameObject.pointerdown` and `gameobjectdown`). This gives you the chance to cancel the event before the global listener receives it.
+* The Game Object `pointerup` callback signature has a new argument. It now sends the `event` as the 4th argument.
+* The Game Object `gameobjectup` callback signature has a new argument. It now sends `event` as the 3rd argument.
+* The `pointerup` event, as dispatched by the InputPlugin, is now sent _after_ the Game Object specific events (`GameObject.pointerup` and `gameobjectup`). This gives you the chance to cancel the event before the global listener receives it.
+* The Game Object `pointermove` callback signature has a new argument. It now sends the `event` as the 4th argument.
+* The Game Object `gameobjectmove` callback signature has a new argument. It now sends `event` as the 3rd argument.
+* The `pointermove` event, as dispatched by the InputPlugin, is now sent _after_ the Game Object specific events (`GameObject.pointermove` and `gameobjectmove`). This gives you the chance to cancel the event before the global listener receives it.
+* The Game Object `pointerover` callback signature has a new argument. It now sends the `event` as the 4th argument.
+* The Game Object `gameobjectover` callback signature has a new argument. It now sends `event` as the 3rd argument.
+* The `pointerover` event, as dispatched by the InputPlugin, is now sent _after_ the Game Object specific events (`GameObject.pointerover` and `gameobjectover`). This gives you the chance to cancel the event before the global listener receives it.
+* The Game Object `pointerout` callback signature has a new argument. It now sends the `event` as the 2nd argument.
+* The Game Object `gameobjectout` callback signature has a new argument. It now sends `event` as the 3rd argument.
+* The `pointerout` event, as dispatched by the InputPlugin, is now sent _after_ the Game Object specific events (`GameObject.pointerout` and `gameobjectout`). This gives you the chance to cancel the event before the global listener receives it.
+
+### Game Object List Updates
+
+When Sprite's are created they are added to two lists within the Scene - the Display List and the Update List. Under 3.12 when a Scene was shut down it would emit a `shutdown` event, which Sprites listened out for. When they received it, they would destroy themselves.
+
+After [profiling and testing](https://github.com/photonstorm/phaser/issues/4028) this process has changed slightly. Game Object's no longer listen for the Scene `shutdown` event. Instead, the Display List and Update List will iterate their children and call `destroy` on them in turn. If being destroyed by a Scene in this way, the child will skip several expensive operations in its destroy function. More importantly, in busy Scenes you no longer need thousands of event listeners registered. The result is that changing Scene is now up to 100% faster than before. You need not change your code to benefit from this, however, if you were relying on custom Game Objects listening for the Scene `shutdown` event natively, then this is no longer the case and you'll have to manually add that listener to your classes.
+
+* The UpdateList will now clear out its internal `_list`, `_pendingRemoval` and `_pendingInsertion` lists on shutdown. Before, it would only clear `_list`.
+* `GameObject.destroy` has a new optional boolean argument `fromScene`, which controls how the destroy process flows.
+
+### Camera Render to Texture
+
+In 3.12 a new Camera method called `setRenderToTexture` was introduced. However, it had known issues so was placed under the experimental flag and you were advised not to use it unless in testing.
+
+Thanks to several fixes in this release the experimental flag has been dropped and it's now safe to try using this new feature in production.
+
+The method sets the Camera to render to a texture instead of to the main canvas. The Camera will redirect all Game Objects it's asked to render to this texture. During the render sequence, the texture itself will then be rendered to the main canvas.
+
+Doing this gives you the ability to modify the texture before this happens, allowing for special effects such as Camera specific shaders, or post-processing on the texture.
+
+* `Camera.setRenderToTexture` is a new method that enables the Camera to render to a target texture instead of the main canvas, allowing for application of special effects at run-time.
+* `Camera.clearRenderToTexture` is a new method that stops a Camera from rendering to a texture and frees-up all associated resources.
+* `Camera.setPipeline` allows you to change the WebGL pipeline being used if the Camera is rendering to a texture, effectively swapping the active shader. Call with no arguments to clear the pipeline.
+* `Camera.renderToTexture` is a boolean property that controls where the Camera renders. It can be toggled on the fly.
+* `Camera.canvas` is a Canvas Element that the Camera will render to if running under the Canvas Renderer and rendering to a texture.
+* `Camera.context` is a Rendering Context that the Camera will render to if running under the Canvas Renderer and rendering to a texture.
+* `Camera.glTexture` is a WebGL Texture that the Camera will render to if running under the WebGL Renderer and rendering to a texture.
+* `Camera.framebuffer` is a WebGL Frame Buffer that the Camera will render to if running under the WebGL Renderer and rendering to a texture.
+* `Camera.pipeline` is the Pipeline that the Camera will render with if running under the WebGL Renderer and rendering to a texture with a pipeline set.
+* If you set a Camera to render to a texture then it will emit 2 events during the render loop. First, it will emit the event `prerender`. This happens right before any Game Object's are drawn to the Camera texture. Then, it will emit the event `postrender`. This happens after all Game Object's have been drawn, but right before the Camera texture is rendered to the main game canvas. It's the final point at which you can manipulate the texture before it appears in-game.
 
 ### New Features
 
-* TextStyle has two new properties: `baselineX` and `baselineY` which allow you to customize the 'magic' value used in calculating the text metrics.
-* Game.Config.preserveDrawingBuffer is now passed to the WebGL Renderer (default `false`).
-* Game.Config.failIfMajorPerformanceCaveat is now passed to the WebGL Renderer (default `false`).
-* Game.Config.powerPreference is now passed to the WebGL Renderer (default `default`).
-* Game.Config.antialias is now passed to the WebGL Renderer as the antialias context property (default `true`).
-* Game.Config.pixelArt is now only used by the WebGL Renderer when creating new textures.
-* Game.Config.premultipliedAlpha is now passed to the WebGL Renderer as the premultipliedAlpha context property (default `true`).
-* You can now specify all of the renderer config options within a `render` object in the config. If no `render` object is found, it will scan the config object directly for the properties.
-* Group.create has a new optional argument: `active` which will set the active state of the child being created (thanks @samme)
-* Group.create has a new optional argument: `active` which will set the active state of the child being created (thanks @samme)
-* Group.createMultiple now allows you to include the `active` property in the config object (thanks @samme)
-* TileSprite has a new method: `setTilePosition` which allows you to set the tile position in a chained called (thanks @samme)
-* Added the new Action - WrapInRectangle. This will wrap each items coordinates within a rectangles area (thanks @samme)
-* Arcade Physics has the new methods `wrap`, `wrapArray` and `wrapObject` which allow you to wrap physics bodies around the world bounds (thanks @samme)
-* The Tweens Timeline has a new method: `makeActive` which delegates control to the Tween Manager (thanks @allanbreyes)
-* Actions.GetLast will return the last element in the items array matching the conditions.
-* Actions.PropertyValueInc is a new action that will increment any property of an array of objects by the given amount, using an optional step value, index and iteration direction. Most Actions have been updated to use this internally.
-* Actions.PropertyValueSet is a new action that will set any property of an array of objects to the given value, using an optional step value, index and iteration direction. Most Actions have been updated to use this internally.
-* Camera.shake now has an optional `callback` argument that is invoked when the effect completes (thanks @pixelscripter)
-* Camera.fade now has an optional `callback` argument that is invoked when the effect completes (thanks @pixelscripter)
-* Camera.flash now has an optional `callback` argument that is invoked when the effect completes (thanks @pixelscripter)
-* Camera.fadeIn is a new method that will fade the camera in from a given color (black by default) and then optionally invoke a callback. This is the same as using Camera.flash but with an easier to grok method name. Fix #3412 (thanks @Jerenaux)
-* Camera.fadeOut is a new method that will fade the camera out to a given color (black by default) and then optionally invoke a callback. This is the same as using Camera.fade but with an easier to grok method name. Fix #3412 (thanks @Jerenaux)
-* Groups will now listen for a `destroy` event from any Game Object added to them, and if received will automatically remove that GameObject from the Group. Fix #3418 (thanks @hadikcz)
-* MatterGameObject is a new function, available via the Matter Factory in `this.matter.add.gameObject`, that will inject a Matter JS Body into any Game Object, such as a Text or TileSprite object.
-* Matter.SetBody and SetExistingBody will now set the origin of the Game Object to be the Matter JS sprite.xOffset and yOffset values, which will auto-center the Game Object to the origin of the body, regardless of shape.
-* SoundManager.setRate is a chainable method to allow you to set the global playback rate of all sounds in the SoundManager.
-* SoundManager.setDetune is a chainable method to allow you to set the global detuning of all sounds in the SoundManager.
-* SoundManager.setMute is a chainable method to allow you to set the global mute state of the SoundManager.
-* SoundManager.setVolume is a chainable method to allow you to set the global volume of the SoundManager.
-* BaseSound.setRate is a chainable method to allow you to set the playback rate of the BaseSound.
-* BaseSound.setDetune is a chainable method to allow you to set the detuning value of the BaseSound.
-
-### Bug Fixes
-
-* Fixed the Debug draw of a scaled circle body in Arcade Physics (thanks @pixelpicosean)
-* Fixed bug in `DataManager.merge` where it would copy the object reference instead of its value (thanks @rexrainbow)
-* The SceneManager no longer copies over the `shutdown` and `destroy` callbacks in createSceneFromObject, as these are not called automatically and should be invoked via the Scene events (thanks @samme)
-* The default Gamepad Button threshold has been changed from 0 to 1. Previously the value of 0 was making all gamepad buttons appear as if they were always pressed down (thanks @jmcriat)
-* InputManager.hitTest will now factor the game resolution into account, stopping the tests from being offset if resolution didn't equal 1 (thanks @sftsk)
-* CameraManager.getCamera now returns the Camera based on its name (thanks @bigbozo)
-* Fixed Tile Culling for zoomed Cameras. When a Camera was zoomed the tiles would be aggressively culled as the dimensions didn't factor in the zoom level (thanks @bigbozo)
-* When calling ScenePlugin.start any additional data passed to the method would be lost if the scene wasn't in an active running state (thanks @stuff)
-* When calling Timeline.resetTweens, while the tweens are pending removal or completed, it would throw a TypeError about the undefined `makeActive` (thanks @allanbreyes)
-* The WebGL Context would set `antialias` to `undefined` as it wasn't set in the Game Config. Fix #3386 (thanks @samme)
-* The TweenManager will now check the state of a tween before playing it. If not in a pending state it will be skipped. This allows you to stop a tween immediately after creating it and not have it play through once anyway. Fix #3405 (thanks @Twilrom)
-* The InputPlugin.processOverOutEvents method wasn't correctly working out the total of the number of objects interacted with, which caused input events to be disabled in Scenes further down the scene list if something was being dragged in an upper scene. Fix #3399 (thanks @Jerenaux)
-* The InputPlugin.processDragEvents wasn't always returning an integer.
-* LoaderPlugin.progress and the corresponding event now factor in both the list size and the inflight size when calculating the percentage complete. Fix #3384 (thanks @vinerz @rblopes @samme)
-* Phaser.Utils.Array.Matrix.RotateLeft actually rotated to the right (thanks @Tomas2h)
-* Phaser.Utils.Array.Matrix.RotateRight actually rotated to the left (thanks @Tomas2h)
-* When deleting a Scene from the SceneManager it would set the key in the scenes has to `undefined`, preventing you from registering a new Scene with the same key. It's now properly removed from the hash(thanks @macbury)
-* Graphics.alpha was being ignored in the WebGL renderer and is now applied properly to strokes and fills. Fix #3426 (thanks @Ziao)
-* The font is now synced to the context in Text before running a word wrap, this ensures the wrapping result between updating the text and getting the wrapped text is the same. Fix #3389 (thanks @rexrainbow)
-* Added the ComputedSize component to the Text Game Object, which allows Text.getBounds, and related methods, to work again instead of returning NaN.
-* Group.remove now calls the `removeCallback` and passes it the child that was removed (thanks @orblazer)
+* The `Color` object has a new property `h` which represents the hue of the color. You can tween or adjust this property in real-time and it will automatically update the internal RGB values with it.
+* The `Color` object has a new property `s` which represents the saturation of the color. You can tween or adjust this property in real-time and it will automatically update the internal RGB values with it.
+* The `Color` object has a new property `v` which represents the lightness value of the color. You can tween or adjust this property in real-time and it will automatically update the internal RGB values with it.
+* `Color.setFromHSV` is a new method that will set the color values based on the HSV values given.
+* `Color.gray` is a new method that will set the color to be a shade of gray based on the amount given.
+* `Color.random` is a new method that will set the color to be a random hue based on the min and max values given.
+* `Color.randomGray` is a new method that will set the color to be a random grayscale based on the min and max values given.
+* `Color.saturate` is a new method that will saturate the color based on the amount given. This is a chainable version of adjusting the saturation property directly.
+* `Color.desaturate` is a new method that will desaturate the color based on the amount given. This is a chainable version of adjusting the saturation property directly.
+* `Color.lighten` is a new method that will lighten the color based on the amount given. This is a chainable version of adjusting the value property directly.
+* `Color.darken` is a new method that will darken the color based on the amount given. This is a chainable version of adjusting the value property directly.
+* `Color.brighten` is a new method that will brighten the color based on the amount given.
+* The `CanvasTexture` class has a new property `imageData` which contains the ImageData of the texture.
+* The `CanvasTexture` class has a new property `data` which is a Uint8ClampedArray view into the `buffer`.
+* The `CanvasTexture` class has a new property `pixels` which is a Uint32Array view into the `buffer`.
+* The `CanvasTexture` class has a new property `buffer` which is an ArrayBuffer the same size as the context ImageData.
+* The `CanvasTexture` class has a new method `update` which refreshes the ImageData and ArrayBuffer based on the texture contents.
+* The `CanvasTexture` class has a new method `draw` which draws the given Image or Canvas element to the CanvasTexture, then updates the internal ImageData buffer and arrays.
+* The `CanvasTexture` class has a new method `getPixel` which will get the color of a specific pixel from the Canvas Texture and store it in the returned Color object. It uses the ArrayBuffer to do this, which is extremely fast, allowing for quick iteration across the canvas data.
+* The WebGLPipeline and WebGLRenderer have new a method `setFloat1v` which allows you to set a `uniform1fv` uniform value (thanks @Mattykins)
+* The WebGLPipeline and WebGLRenderer have new a method `setFloat2v` which allows you to set a `uniform2fv` uniform value (thanks @Mattykins)
+* The WebGLPipeline and WebGLRenderer have new a method `setFloat3v` which allows you to set a `uniform3fv` uniform value (thanks @Mattykins)
+* The WebGLPipeline and WebGLRenderer have new a method `setFloat4v` which allows you to set a `uniform4fv` uniform value (thanks @Mattykins)
+* `Text.setLineSpacing` is a new method that allows you to easily set the line spacing value of a Text object in a chainable call (thanks @RafelSanso)
 
 ### Updates
 
-* The Text testString has changed from `|MÉqgy` to `|MÃ‰qgy`.
-* The WebGLRenderer width and height values are now floored when multiplied by the resolution.
-* The WebGL Context now sets `premultipliedAlpha` to `true` by default, this prevents the WebGL context from rendering as plain white under certain versions of macOS Safari.
-* The Phaser.Display.Align constants are now exposed on the namespace. Fix #3387 (thanks @samme)
-* The Phaser.Loader constants are now exposed on the namespace. Fix #3387 (thanks @samme)
-* The Phaser.Physics.Arcade constants are now exposed on the namespace. Fix #3387 (thanks @samme)
-* The Phaser.Scene constants are now exposed on the namespace. Fix #3387 (thanks @samme)
-* The Phaser.Tweens constants are now exposed on the namespace. Fix #3387 (thanks @samme)
-* The Array Matrix utils are now exposed and available via `Phaser.Utils.Array.Matrix`.
-* Actions.Angle has 3 new arguments: `step`, `index` and `direction`.
-* Actions.IncAlpha has 3 new arguments: `step`, `index` and `direction`.
-* Actions.IncX has 3 new arguments: `step`, `index` and `direction`.
-* Actions.IncY has 3 new arguments: `step`, `index` and `direction`.
-* Actions.IncXY has 4 new arguments: `stepX`, `stepY`, `index` and `direction`.
-* Actions.Rotate has 3 new arguments: `step`, `index` and `direction`.
-* Actions.ScaleX has 3 new arguments: `step`, `index` and `direction`.
-* Actions.ScaleXY has 4 new arguments: `stepX`, `stepY`, `index` and `direction`.
-* Actions.ScaleY has 3 new arguments: `step`, `index` and `direction`.
-* Actions.SetAlpha has 2 new arguments: `index` and `direction`.
-* Actions.SetBlendMode has 2 new arguments: `index` and `direction`.
-* Actions.SetDepth has 2 new arguments: `index` and `direction`.
-* Actions.SetOrigin has 4 new arguments: `stepX`, `stepY`, `index` and `direction`.
-* Actions.SetRotation has 2 new arguments: `index` and `direction`.
-* Actions.SetScale has 2 new arguments: `index` and `direction`.
-* Actions.SetScaleX has 2 new arguments: `index` and `direction`.
-* Actions.SetScaleY has 2 new arguments: `index` and `direction`.
-* Actions.SetVisible has 2 new arguments: `index` and `direction`.
-* Actions.SetX has 2 new arguments: `index` and `direction`.
-* Actions.SetXY has 2 new arguments: `index` and `direction`.
-* Actions.SetY has 2 new arguments: `index` and `direction`.
-* Line.getPointA now returns a Vector2 instead of an untyped object. It also now has an optional argument that allows you to pass a vec2 in to be populated, rather than creating a new one.
-* Line.getPointB now returns a Vector2 instead of an untyped object. It also now has an optional argument that allows you to pass a vec2 in to be populated, rather than creating a new one.
-* Rectangle.getLineA now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* Rectangle.getLineB now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* Rectangle.getLineC now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* Rectangle.getLineD now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* Triangle.getLineA now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* Triangle.getLineB now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* Triangle.getLineC now returns a Line instead of an untyped object. It also now has an optional argument that allows you to pass a Line in to be populated, rather than creating a new one.
-* The GameObject `destroy` event is now emitted at the start of the destroy process, before things like the body or input managers have been removed, so you're able to use the event handler to extract any information you require from the GameObject before it's actually disposed of. Previously, the event was dispatched at the very end of the process.
-* Phaser 3 is now built with Webpack v4.1.1 and all related packages have been updated (thanks @orblazer)
-* On WebGL the currentScissor is now updated when the renderer `resize` method is called (thanks @jmcriat)
-* PathFollower.start has been renamed to `startFollow` to avoid conflicting with the Animation component.
-* PathFollower.pause has been renamed to `pauseFollow` to avoid conflicting with the Animation component.
-* PathFollower.resume has been renamed to `resumeFollow` to avoid conflicting with the Animation component.
-* PathFollower.stop has been renamed to `stopFollow` to avoid conflicting with the Animation component.
-* BaseSound.setRate has been renamed to `calculateRate` to avoid confusion over the setting of the sounds rate.
+* The Graphics Canvas Renderer will now automatically call `beginPath` on the target context before processing the command stack. This has the effect of clearing off any sub-paths that may have persisted on the stack from previous Graphics objects or frames. This makes it more in-line with WebGL re: expectations when calling `Graphics.clear`.
+* `initPipeline` now defaults to the Texture Tint Pipeline if nothing else is specified. This allowed me to remove explicit strings from 11 different Game Objects, saving some bytes in the process.
+* The `RGBToHSV` function can now take an optional `out` argument, which is either a `HSVColorObject` or a `Color` object, and the results will be set into that object instead of creating a new one.
+* The `HSVToRGB` function can now take an optional `out` argument, which is either a `HSVColorObject` or a `Color` object, and the results will be set into that object instead of creating a new one.
+* `Color.setTo` has a new argument `updateHSV` which allows you to control if the internal HSV values are updated during the same call or not.
+* The `Text._lineSpacing` property has been renamed to `lineSpacing` and made public, not private. You still set it in the same way, by passing a `lineSpacing` property to the Text configuration object, but internally it's now clearer.
+* If a Scene is already active (i.e. running) and you call `start` on it (such as from another Scene) then it will shutdown the Scene first, before starting it again.
 
-Please see the complete [Change Log]((https://github.com/photonstorm/phaser/blob/master/CHANGELOG.md)) for previous releases.
+### Bug Fixes
+
+* TileSprite.setTileScale would set the tile position by mistake, instead of the scale. Using the properties directly worked, but the method was incorrect (thanks @alexeymolchan)
+* Calling `Text.setStyle` would make the Text vanish if you didn't provide a `resolution` property in the style configuration object. Calling `setStyle` now only changes the properties given in the object, leaving any previously changed properties as-is. Fix #4011 (thanks @okcompewter)
+* In Matter.js if a body had its debug `render.visible` property set to `false` it wouldn't then render any other debug body beyond it. Now it will just skip bodies with hidden debug graphics (thanks @jf908)
+* If you flagged a Tween as `paused` in its config, never started it, and then called `Tween.stop` it wouldn't ever be removed from the `_pending` array. It's now moved to the Tween Manager's destroy list, ready for removal on the next frame. Fix #4023 (thanks @goldfire)
+* Game Objects would not remove themselves from the Scene's `shutdown` event handler when destroyed, leading to a build-up over time (thanks @goldfire)
+* The WebGL Renderer will no longer try and just resize a canvas backed texture, instead it will properly delete it then re-create it. Fix #4016 (thanks @alexeymolchan)
+* The Camera background for mini-Cameras (those positioned deep inside another Camera) would be offset incorrectly in WebGL, causing the background fills to be displaced (thanks @aaronfc)
+* The WebGL Renderer now always enables the `SCISSOR_TEST`, this allows Game Objects that use the scissor (such as custom objects, or Bitmap Text) to render properly again.
+* The Cameras `setScene` method, which is called automatically when a new Camera is created, will now call `updateSystem` which correctly increases the custom viewport counter. This fixes an issue with mini-cams inside of larger cameras not clipping their contents properly. If a Camera is moved to another Scene it also now correctly shrinks the total custom viewport counter.
+* Due to the two fixes above another bug was fixed: The ability for you to swap between Cameras with and without `setRenderToTexture` enabled with custom shaders. Previously if you used this with a custom shader then only the first Camera using the shader would render, the rest would appear black. Now, all Cameras using the custom shader work correctly. As a result all of the 'experimental' Camera rendering properties from 3.12 have been moved to stable.
+* If you destroyed a Game Object that had a custom cursor set during one of its input events the cursor didn't correctly reset. Fix #4033 (thanks @pantoninho)
+* `RenderTexture.resize` wouldn't correctly resize the texture under WebGL. Fix #4034 (thanks @jbpuryear)
+* Calling `setFrame` on a TileSprite wouldn't change the frame, it would just change the frame size. Fix #4039 (thanks @Jerenaux)
+* `Zone.setRectangleDropZone` used the wrong `x` and `y` coordinates for the hit area, causing it to be offset from the zone itself after the changes made for issue #3865 in the 3.12 release.
+
+### Examples, Documentation and TypeScript
+
+My thanks to the following for helping with the Phaser 3 Examples, Docs and TypeScript definitions, either by reporting errors, fixing them or helping author the docs:
+
+@johanlindfors @Arthur3DLHC @JamesSkemp
+
+Please see the complete [Change Log](https://github.com/photonstorm/phaser/blob/master/CHANGELOG.md) for previous releases.
 
 Looking for a v2 change? Check out the [Phaser CE Change Log](https://github.com/photonstorm/phaser-ce/blob/master/CHANGELOG.md)
 
@@ -398,8 +511,8 @@ All rights reserved.
 
 "Above all, video games are meant to be just one thing: fun. Fun for everyone." - Satoru Iwata
 
-[get-js]: https://github.com/photonstorm/phaser/releases/download/v3.3.0/phaser.js
-[get-minjs]: https://github.com/photonstorm/phaser/releases/download/v3.3.0/phaser.min.js
+[get-js]: https://github.com/photonstorm/phaser/releases/download/v3.11/phaser.js
+[get-minjs]: https://github.com/photonstorm/phaser/releases/download/v3.11/phaser.min.js
 [clone-http]: https://github.com/photonstorm/phaser.git
 [clone-ssh]: git@github.com:photonstorm/phaser.git
 [clone-ghwin]: github-windows://openRepo/https://github.com/photonstorm/phaser
@@ -408,4 +521,4 @@ All rights reserved.
 [issues]: https://github.com/photonstorm/phaser/issues
 [examples]: https://github.com/photonstorm/phaser3-examples
 [contribute]: https://github.com/photonstorm/phaser/blob/master/.github/CONTRIBUTING.md
-[forum]: http://www.html5gamedevs.com/forum/14-phaser/
+[forum]: http://www.html5gamedevs.com/forum/33-phaser-3/

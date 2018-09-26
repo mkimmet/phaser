@@ -10,9 +10,9 @@
  * @function Phaser.GameObjects.Text.GetTextSize
  * @since 3.0.0
  *
- * @param {Phaser.GameObjects.Text} text - The Text object to get the size from.
- * @param {number} size - [description]
- * @param {array} lines - [description]
+ * @param {Phaser.GameObjects.Text} text - The Text object to calculate the size from.
+ * @param {BitmapTextMetrics} size - The Text metrics to use when calculating the size.
+ * @param {array} lines - The lines of text to calculate the size from.
  *
  * @return {object} An object containing dimensions of the Text object.
  */
@@ -25,7 +25,7 @@ var GetTextSize = function (text, size, lines)
     var lineWidths = [];
     var maxLineWidth = 0;
     var drawnLines = lines.length;
-    
+
     if (style.maxLines > 0 && style.maxLines < lines.length)
     {
         drawnLines = style.maxLines;
@@ -55,17 +55,12 @@ var GetTextSize = function (text, size, lines)
 
     var lineHeight = size.fontSize + style.strokeThickness;
     var height = lineHeight * drawnLines;
-    var lineSpacing = text._lineSpacing || 0;
-
-    if (lineSpacing < 0 && Math.abs(lineSpacing) > lineHeight)
-    {
-        lineSpacing = -lineHeight;
-    }
+    var lineSpacing = text.lineSpacing;
 
     //  Adjust for line spacing
-    if (lineSpacing !== 0)
+    if (lines.length > 1)
     {
-        height += (lineSpacing > 0) ? lineSpacing * lines.length : lineSpacing * (lines.length - 1);
+        height += lineSpacing * (lines.length - 1);
     }
 
     return {

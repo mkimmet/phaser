@@ -7,6 +7,7 @@
 var Bodies = require('../lib/factory/Bodies');
 var Body = require('../lib/body/Body');
 var GetFastValue = require('../../../utils/object/GetFastValue');
+var PhysicsEditorParser = require('../PhysicsEditorParser');
 
 /**
  * [description]
@@ -114,7 +115,7 @@ var SetBody = {
 
         var _this = this;
 
-        this.body.destroy = function ()
+        body.destroy = function destroy ()
         {
             _this.world.remove(_this.body);
             _this.body.gameObject = null;
@@ -122,10 +123,13 @@ var SetBody = {
 
         if (addToWorld)
         {
-            this.world.add(this.body);
+            this.world.add(body);
         }
 
-        this.setOrigin(body.render.sprite.xOffset, body.render.sprite.yOffset);
+        if (this._originComponent)
+        {
+            this.setOrigin(body.render.sprite.xOffset, body.render.sprite.yOffset);
+        }
 
         return this;
     },
@@ -202,6 +206,10 @@ var SetBody = {
                     var minimumArea = GetFastValue(config, 'minimumArea', 10);
                     body = Bodies.fromVertices(bodyX, bodyY, verts, options, flagInternal, removeCollinear, minimumArea);
                 }
+                break;
+
+            case 'fromPhysicsEditor':
+                body = PhysicsEditorParser.parseBody(bodyX, bodyY, bodyWidth, bodyHeight, config);
                 break;
         }
 

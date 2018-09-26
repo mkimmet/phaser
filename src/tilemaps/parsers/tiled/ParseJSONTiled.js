@@ -14,6 +14,10 @@ var BuildTilesetIndex = require('./BuildTilesetIndex');
 var AssignTileProperties = require('./AssignTileProperties');
 
 /**
+ * @namespace Phaser.Tilemaps.Parsers.Tiled
+ */
+
+/**
  * Parses a Tiled JSON object into a new MapData object.
  *
  * @function Phaser.Tilemaps.Parsers.Tiled.ParseJSONTiled
@@ -48,7 +52,8 @@ var ParseJSONTiled = function (name, json, insertNull)
         orientation: json.orientation,
         format: Formats.TILED_JSON,
         version: json.version,
-        properties: json.properties
+        properties: json.properties,
+        renderOrder: json.renderorder
     });
 
     mapData.layers = ParseTileLayers(json, insertNull);

@@ -129,6 +129,16 @@ var Tileset = new Class({
         this.image = null;
 
         /**
+         * The gl texture used by the WebGL renderer.
+         *
+         * @name Phaser.Tilemaps.Tileset#glTexture
+         * @type {?WebGLTexture}
+         * @readOnly
+         * @since 3.11.0
+         */
+        this.glTexture = null;
+
+        /**
          * The number of tile rows in the the tileset.
          *
          * @name Phaser.Tilemaps.Tileset#rows
@@ -168,6 +178,15 @@ var Tileset = new Class({
          * @since 3.0.0
         */
         this.texCoordinates = [];
+
+        /**
+         * A look-up map that converts between Tiled 1.1 and Tiled 1.2 tile data.
+         *
+         * @name Phaser.Tilemaps.Tileset#tileIndexMap
+         * @type {object}
+         * @since 3.14.0
+        */
+        this.tileIndexMap = null;
     },
 
     /**
@@ -204,7 +223,17 @@ var Tileset = new Class({
     {
         if (!this.containsTileIndex(tileIndex)) { return null; }
 
-        return this.tileData[tileIndex - this.firstgid];
+        if (!this.tileIndexMap)
+        {
+            this.tileIndexMap = {};
+
+            for (var i = 0; i < this.tileData.length; i++)
+            {
+                this.tileIndexMap[this.tileData[i]['id']] = this.tileData[i];
+            }
+        }
+        
+        return this.tileIndexMap[tileIndex - this.firstgid];
     },
 
     /**
@@ -275,6 +304,8 @@ var Tileset = new Class({
     setImage: function (texture)
     {
         this.image = texture;
+
+        this.glTexture = texture.get().source.glTexture;
 
         this.updateTileData(this.image.source[0].width, this.image.source[0].height);
 

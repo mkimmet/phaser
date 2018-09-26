@@ -5,9 +5,9 @@
  */
 
 var MATH_CONST = require('../../math/const');
+var TransformMatrix = require('./TransformMatrix');
 var WrapAngle = require('../../math/angle/Wrap');
 var WrapAngleDegrees = require('../../math/angle/WrapDegrees');
-var TransformMatrix = require('./TransformMatrix');
 
 //  global bitmask flag for GameObject.renderMask (used by Scale)
 var _FLAG = 4; // 0100
@@ -25,7 +25,7 @@ var Transform = {
      * Private internal value. Holds the horizontal scale value.
      * 
      * @name Phaser.GameObjects.Components.Transform#_scaleX
-     * @type {float}
+     * @type {number}
      * @private
      * @default 1
      * @since 3.0.0
@@ -36,7 +36,7 @@ var Transform = {
      * Private internal value. Holds the vertical scale value.
      * 
      * @name Phaser.GameObjects.Components.Transform#_scaleY
-     * @type {float}
+     * @type {number}
      * @private
      * @default 1
      * @since 3.0.0
@@ -47,7 +47,7 @@ var Transform = {
      * Private internal value. Holds the rotation value in radians.
      * 
      * @name Phaser.GameObjects.Components.Transform#_rotation
-     * @type {float}
+     * @type {number}
      * @private
      * @default 0
      * @since 3.0.0
@@ -218,7 +218,7 @@ var Transform = {
      * @param {number} [z=0] - The z position of this Game Object.
      * @param {number} [w=0] - The w position of this Game Object.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setPosition: function (x, y, z, w)
     {
@@ -236,6 +236,38 @@ var Transform = {
     },
 
     /**
+     * Sets the position of this Game Object to be a random position within the confines of
+     * the given area.
+     * 
+     * If no area is specified a random position between 0 x 0 and the game width x height is used instead.
+     *
+     * The position does not factor in the size of this Game Object, meaning that only the origin is
+     * guaranteed to be within the area.
+     *
+     * @method Phaser.GameObjects.Components.Transform#setRandomPosition
+     * @since 3.8.0
+     *
+     * @param {number} [x=0] - The x position of the top-left of the random area.
+     * @param {number} [y=0] - The y position of the top-left of the random area.
+     * @param {number} [width] - The width of the random area.
+     * @param {number} [height] - The height of the random area.
+     *
+     * @return {this} This Game Object instance.
+     */
+    setRandomPosition: function (x, y, width, height)
+    {
+        if (x === undefined) { x = 0; }
+        if (y === undefined) { y = 0; }
+        if (width === undefined) { width = this.scene.sys.game.config.width; }
+        if (height === undefined) { height = this.scene.sys.game.config.height; }
+
+        this.x = x + (Math.random() * width);
+        this.y = y + (Math.random() * height);
+
+        return this;
+    },
+
+    /**
      * Sets the rotation of this Game Object.
      *
      * @method Phaser.GameObjects.Components.Transform#setRotation
@@ -243,7 +275,7 @@ var Transform = {
      *
      * @param {number} [radians=0] - The rotation of this Game Object, in radians.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setRotation: function (radians)
     {
@@ -262,7 +294,7 @@ var Transform = {
      *
      * @param {number} [degrees=0] - The rotation of this Game Object, in degrees.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setAngle: function (degrees)
     {
@@ -282,7 +314,7 @@ var Transform = {
      * @param {number} x - The horizontal scale of this Game Object.
      * @param {number} [y=x] - The vertical scale of this Game Object. If not set it will use the `x` value.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setScale: function (x, y)
     {
@@ -303,7 +335,7 @@ var Transform = {
      *
      * @param {number} [value=0] - The x position of this Game Object.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setX: function (value)
     {
@@ -322,7 +354,7 @@ var Transform = {
      *
      * @param {number} [value=0] - The y position of this Game Object.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setY: function (value)
     {
@@ -341,7 +373,7 @@ var Transform = {
      *
      * @param {number} [value=0] - The z position of this Game Object.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setZ: function (value)
     {
@@ -360,7 +392,7 @@ var Transform = {
      *
      * @param {number} [value=0] - The w position of this Game Object.
      *
-     * @return {Phaser.GameObjects.GameObject} This Game Object instance.
+     * @return {this} This Game Object instance.
      */
     setW: function (value)
     {
@@ -371,37 +403,56 @@ var Transform = {
         return this;
     },
 
+    /**
+     * Gets the local transform matrix for this Game Object.
+     *
+     * @method Phaser.GameObjects.Components.Transform#getLocalTransformMatrix
+     * @since 3.4.0
+     *
+     * @param {Phaser.GameObjects.Components.TransformMatrix} [tempMatrix] - The matrix to populate with the values from this Game Object.
+     *
+     * @return {Phaser.GameObjects.Components.TransformMatrix} The populated Transform Matrix.
+     */
     getLocalTransformMatrix: function (tempMatrix)
     {
+        if (tempMatrix === undefined) { tempMatrix = new TransformMatrix(); }
+
         return tempMatrix.applyITRS(this.x, this.y, this._rotation, this._scaleX, this._scaleY);
     },
 
-    getWorldTransformMatrix: function (tempMatrix)
+    /**
+     * Gets the world transform matrix for this Game Object, factoring in any parent Containers.
+     *
+     * @method Phaser.GameObjects.Components.Transform#getWorldTransformMatrix
+     * @since 3.4.0
+     *
+     * @param {Phaser.GameObjects.Components.TransformMatrix} [tempMatrix] - The matrix to populate with the values from this Game Object.
+     * @param {Phaser.GameObjects.Components.TransformMatrix} [parentMatrix] - A temporary matrix to hold parent values during the calculations.
+     *
+     * @return {Phaser.GameObjects.Components.TransformMatrix} The populated Transform Matrix.
+     */
+    getWorldTransformMatrix: function (tempMatrix, parentMatrix)
     {
+        if (tempMatrix === undefined) { tempMatrix = new TransformMatrix(); }
+        if (parentMatrix === undefined) { parentMatrix = new TransformMatrix(); }
+
         var parent = this.parentContainer;
-        var parents = [];
-        
+
+        if (!parent)
+        {
+            return this.getLocalTransformMatrix(tempMatrix);
+        }
+
+        tempMatrix.applyITRS(this.x, this.y, this._rotation, this._scaleX, this._scaleY);
+
         while (parent)
         {
-            parents.unshift(parent);
+            parentMatrix.applyITRS(parent.x, parent.y, parent._rotation, parent._scaleX, parent._scaleY);
+
+            parentMatrix.multiply(tempMatrix, tempMatrix);
+
             parent = parent.parentContainer;
         }
-
-        tempMatrix.loadIdentity();
-
-        var length = parents.length;
-        
-        for (var i = 0; i < length; ++i)
-        {
-            rootContainer = parents[i];
-            tempMatrix.translate(rootContainer.x, rootContainer.y);
-            tempMatrix.rotate(rootContainer.rotation);
-            tempMatrix.scale(rootContainer.scaleX, rootContainer.scaleY);
-        }
-
-        tempMatrix.translate(this.x, this.y);
-        tempMatrix.rotate(this._rotation);
-        tempMatrix.scale(this._scaleX, this._scaleY);
 
         return tempMatrix;
     }

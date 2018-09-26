@@ -7,10 +7,11 @@
 var Class = require('../../utils/Class');
 var DegToRad = require('../../math/DegToRad');
 var DistanceBetween = require('../../math/distance/DistanceBetween');
+var DistanceSquared = require('../../math/distance/DistanceSquared');
 var Factory = require('./Factory');
 var GetFastValue = require('../../utils/object/GetFastValue');
 var Merge = require('../../utils/object/Merge');
-var PluginManager = require('../../boot/PluginManager');
+var PluginCache = require('../../plugins/PluginCache');
 var Vector2 = require('../../math/Vector2');
 var World = require('./World');
 
@@ -51,11 +52,6 @@ var ArcadePhysics = new Class({
          */
         this.systems = scene.sys;
 
-        if (!scene.sys.settings.isBooted)
-        {
-            scene.sys.events.once('boot', this.boot, this);
-        }
-
         /**
          * [description]
          *
@@ -82,6 +78,49 @@ var ArcadePhysics = new Class({
          * @since 3.0.0
          */
         this.add;
+
+        scene.sys.events.once('boot', this.boot, this);
+        scene.sys.events.on('start', this.start, this);
+    },
+
+    /**
+     * This method is called automatically, only once, when the Scene is first created.
+     * Do not invoke it directly.
+     *
+     * @method Phaser.Physics.Arcade.ArcadePhysics#boot
+     * @private
+     * @since 3.5.1
+     */
+    boot: function ()
+    {
+        this.world = new World(this.scene, this.config);
+        this.add = new Factory(this.world);
+
+        this.systems.events.once('destroy', this.destroy, this);
+    },
+
+    /**
+     * This method is called automatically by the Scene when it is starting up.
+     * It is responsible for creating local systems, properties and listening for Scene events.
+     * Do not invoke it directly.
+     *
+     * @method Phaser.Physics.Arcade.ArcadePhysics#start
+     * @private
+     * @since 3.5.0
+     */
+    start: function ()
+    {
+        if (!this.world)
+        {
+            this.world = new World(this.scene, this.config);
+            this.add = new Factory(this.world);
+        }
+
+        var eventEmitter = this.systems.events;
+
+        eventEmitter.on('update', this.world.update, this.world);
+        eventEmitter.on('postupdate', this.world.postUpdate, this.world);
+        eventEmitter.once('shutdown', this.shutdown, this);
     },
 
     /**
@@ -103,25 +142,6 @@ var ArcadePhysics = new Class({
         );
 
         return config;
-    },
-
-    /**
-     * [description]
-     *
-     * @method Phaser.Physics.Arcade.ArcadePhysics#boot
-     * @since 3.0.0
-     */
-    boot: function ()
-    {
-        this.world = new World(this.scene, this.config);
-        this.add = new Factory(this.world);
-
-        var eventEmitter = this.systems.events;
-
-        eventEmitter.on('update', this.world.update, this.world);
-        eventEmitter.on('postupdate', this.world.postUpdate, this.world);
-        eventEmitter.on('shutdown', this.shutdown, this);
-        eventEmitter.on('destroy', this.destroy, this);
     },
 
     /**
@@ -210,7 +230,7 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * Sets the acceleration.x/y property on the game object so it will move towards the x/y coordinates at the given speed (in pixels per second sq.)
+     * Sets the acceleration.x/y property on the game object so it will move towards the x/y coordinates at the given rate (in pixels per second squared)
      *
      * You must give a maximum speed value, beyond which the game object won't go any faster.
      *
@@ -223,7 +243,7 @@ var ArcadePhysics = new Class({
      * @param {Phaser.GameObjects.GameObject} gameObject - Any Game Object with an Arcade Physics body.
      * @param {number} x - The x coordinate to accelerate towards.
      * @param {number} y - The y coordinate to accelerate towards.
-     * @param {number} [speed=60] - The speed it will accelerate in pixels per second.
+     * @param {number} [speed=60] - The acceleration (change in speed) in pixels per second squared.
      * @param {number} [xSpeedMax=500] - The maximum x velocity the game object can reach.
      * @param {number} [ySpeedMax=500] - The maximum y velocity the game object can reach.
      *
@@ -246,7 +266,7 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * Sets the acceleration.x/y property on the game object so it will move towards the x/y coordinates at the given speed (in pixels per second sq.)
+     * Sets the acceleration.x/y property on the game object so it will move towards the x/y coordinates at the given rate (in pixels per second squared)
      *
      * You must give a maximum speed value, beyond which the game object won't go any faster.
      *
@@ -258,7 +278,7 @@ var ArcadePhysics = new Class({
      *
      * @param {Phaser.GameObjects.GameObject} gameObject - Any Game Object with an Arcade Physics body.
      * @param {Phaser.GameObjects.GameObject} destination - The Game Object to move towards. Can be any object but must have visible x/y properties.
-     * @param {number} [speed=60] - The speed it will accelerate in pixels per second.
+     * @param {number} [speed=60] - The acceleration (change in speed) in pixels per second squared.
      * @param {number} [xSpeedMax=500] - The maximum x velocity the game object can reach.
      * @param {number} [ySpeedMax=500] - The maximum y velocity the game object can reach.
      *
@@ -270,7 +290,7 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * From a set of points or display objects, find the one closest to a source point or object.
+     * Finds the Body closest to a source point or object.
      *
      * @method Phaser.Physics.Arcade.ArcadePhysics#closest
      * @since 3.0.0
@@ -281,7 +301,7 @@ var ArcadePhysics = new Class({
      */
     closest: function (source)
     {
-        var bodies = this.tree.all();
+        var bodies = this.world.tree.all();
 
         var min = Number.MAX_VALUE;
         var closest = null;
@@ -291,7 +311,7 @@ var ArcadePhysics = new Class({
         for (var i = bodies.length - 1; i >= 0; i--)
         {
             var target = bodies[i];
-            var distance = DistanceBetween(x, y, target.x, target.y);
+            var distance = DistanceSquared(x, y, target.x, target.y);
 
             if (distance < min)
             {
@@ -304,7 +324,7 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * From a set of points or display objects, find the one farthest from a source point or object.
+     * Finds the Body farthest from a source point or object.
      *
      * @method Phaser.Physics.Arcade.ArcadePhysics#furthest
      * @since 3.0.0
@@ -315,7 +335,7 @@ var ArcadePhysics = new Class({
      */
     furthest: function (source)
     {
-        var bodies = this.tree.all();
+        var bodies = this.world.tree.all();
 
         var max = -1;
         var farthest = null;
@@ -325,7 +345,7 @@ var ArcadePhysics = new Class({
         for (var i = bodies.length - 1; i >= 0; i--)
         {
             var target = bodies[i];
-            var distance = DistanceBetween(x, y, target.x, target.y);
+            var distance = DistanceSquared(x, y, target.x, target.y);
 
             if (distance > max)
             {
@@ -398,14 +418,14 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * Given the angle (in degrees) and speed calculate the velocity and return it as a Point object, or set it to the given point object.
-     * One way to use this is: velocityFromAngle(angle, 200, sprite.velocity) which will set the values directly to the sprites velocity and not create a new Point object.
+     * Given the angle (in degrees) and speed calculate the velocity and return it as a vector, or set it to the given vector object.
+     * One way to use this is: velocityFromAngle(angle, 200, sprite.body.velocity) which will set the values directly to the sprite's velocity and not create a new vector object.
      *
      * @method Phaser.Physics.Arcade.ArcadePhysics#velocityFromAngle
      * @since 3.0.0
      *
      * @param {number} angle - The angle in degrees calculated in clockwise positive direction (down = 90 degrees positive, right = 0 degrees positive, up = 90 degrees negative)
-     * @param {number} [speed=60] - The speed it will move, in pixels per second sq.
+     * @param {number} [speed=60] - The speed it will move, in pixels per second squared.
      * @param {Phaser.Math.Vector2} [vec2] - The Vector2 in which the x and y properties will be set to the calculated velocity.
      *
      * @return {Phaser.Math.Vector2} The Vector2 that stores the velocity.
@@ -419,14 +439,14 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * Given the rotation (in radians) and speed calculate the velocity and return it as a Point object, or set it to the given point object.
-     * One way to use this is: velocityFromRotation(rotation, 200, sprite.velocity) which will set the values directly to the sprites velocity and not create a new Point object.
+     * Given the rotation (in radians) and speed calculate the velocity and return it as a vector, or set it to the given vector object.
+     * One way to use this is: velocityFromRotation(rotation, 200, sprite.body.velocity) which will set the values directly to the sprite's velocity and not create a new vector object.
      *
      * @method Phaser.Physics.Arcade.ArcadePhysics#velocityFromRotation
      * @since 3.0.0
      *
      * @param {number} rotation - The angle in radians.
-     * @param {number} [speed=60] - The speed it will move, in pixels per second sq.
+     * @param {number} [speed=60] - The speed it will move, in pixels per second squared
      * @param {Phaser.Math.Vector2} [vec2] - The Vector2 in which the x and y properties will be set to the calculated velocity.
      *
      * @return {Phaser.Math.Vector2} The Vector2 that stores the velocity.
@@ -440,29 +460,46 @@ var ArcadePhysics = new Class({
     },
 
     /**
-     * [description]
+     * The Scene that owns this plugin is shutting down.
+     * We need to kill and reset all internal properties as well as stop listening to Scene events.
      *
      * @method Phaser.Physics.Arcade.ArcadePhysics#shutdown
      * @since 3.0.0
      */
     shutdown: function ()
     {
-        this.world.shutdown();
+        var eventEmitter = this.systems.events;
+
+        eventEmitter.off('update', this.world.update, this.world);
+        eventEmitter.off('postupdate', this.world.postUpdate, this.world);
+        eventEmitter.off('shutdown', this.shutdown, this);
+
+        this.add.destroy();
+        this.world.destroy();
+
+        this.add = null;
+        this.world = null;
     },
 
     /**
-     * [description]
+     * The Scene that owns this plugin is being destroyed.
+     * We need to shutdown and then kill off all external references.
      *
      * @method Phaser.Physics.Arcade.ArcadePhysics#destroy
      * @since 3.0.0
      */
     destroy: function ()
     {
-        this.world.destroy();
+        this.shutdown();
+
+        this.scene.sys.events.off('start', this.start, this);
+
+        this.scene = null;
+        this.systems = null;
     }
 
 });
 
-PluginManager.register('ArcadePhysics', ArcadePhysics, 'arcadePhysics');
+PluginCache.register('ArcadePhysics', ArcadePhysics, 'arcadePhysics');
 
 module.exports = ArcadePhysics;

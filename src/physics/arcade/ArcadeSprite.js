@@ -39,7 +39,6 @@ var Sprite = require('../../gameobjects/sprite/Sprite');
  * @extends Phaser.Physics.Arcade.Components.Size
  * @extends Phaser.Physics.Arcade.Components.Velocity
  * @extends Phaser.GameObjects.Components.Alpha
- * @extends Phaser.GameObjects.Components.Animation
  * @extends Phaser.GameObjects.Components.BlendMode
  * @extends Phaser.GameObjects.Components.Depth
  * @extends Phaser.GameObjects.Components.Flip
@@ -84,6 +83,16 @@ var ArcadeSprite = new Class({
     function ArcadeSprite (scene, x, y, texture, frame)
     {
         Sprite.call(this, scene, x, y, texture, frame);
+
+        /**
+         * This Game Object's Physics Body.
+         *
+         * @name Phaser.Physics.Arcade.Sprite#body
+         * @type {?(Phaser.Physics.Arcade.Body|Phaser.Physics.Arcade.StaticBody)}
+         * @default null
+         * @since 3.0.0
+         */
+        this.body = null;
     }
 
 });

@@ -17,12 +17,12 @@ var TILEMAP_FORMATS = require('../../tilemaps/Formats');
 var TYPE = require('./TYPE');
 
 /**
- * @typedef {object} ImpactWorldConfig
+ * @typedef {object} Phaser.Physics.Impact.WorldConfig
  *
  * @property {number} [gravity=0] - [description]
  * @property {number} [cellSize=64] - [description]
  * @property {number} [timeScale=1] - [description]
- * @property {float} [maxStep=0.05] - [description]
+ * @property {number} [maxStep=0.05] - [description]
  * @property {boolean} [debug=false] - [description]
  * @property {number} [maxVelocity=100] - [description]
  * @property {boolean} [debugShowBody=true] - [description]
@@ -48,7 +48,8 @@ var TYPE = require('./TYPE');
 
 /**
  * An object containing the 4 wall bodies that bound the physics world.
- * @typedef {object} ImpactWorldDefaults
+ * 
+ * @typedef {object} Phaser.Physics.Impact.WorldDefaults
  *
  * @property {boolean} debugShowBody - [description]
  * @property {boolean} debugShowVelocity - [description]
@@ -62,7 +63,7 @@ var TYPE = require('./TYPE');
  */
 
 /**
- * @typedef {object} ImpactWorldWalls
+ * @typedef {object} Phaser.Physics.Impact.WorldWalls
  *
  * @property {?Phaser.Physics.Impact.Body} left - [description]
  * @property {?Phaser.Physics.Impact.Body} right - [description]
@@ -81,7 +82,7 @@ var TYPE = require('./TYPE');
  * @since 3.0.0
  *
  * @param {Phaser.Scene} scene - [description]
- * @param {ImpactWorldConfig} config - [description]
+ * @param {Phaser.Physics.Impact.WorldConfig} config - [description]
  */
 var World = new Class({
 
@@ -144,7 +145,7 @@ var World = new Class({
          * [description]
          *
          * @name Phaser.Physics.Impact.World#timeScale
-         * @type {float}
+         * @type {number}
          * @default 1
          * @since 3.0.0
          */
@@ -194,7 +195,7 @@ var World = new Class({
          * [description]
          *
          * @name Phaser.Physics.Impact.World#defaults
-         * @type {ImpactWorldDefaults}
+         * @type {Phaser.Physics.Impact.WorldDefaults}
          * @since 3.0.0
          */
         this.defaults = {
@@ -213,7 +214,7 @@ var World = new Class({
          * An object containing the 4 wall bodies that bound the physics world.
          *
          * @name Phaser.Physics.Impact.World#walls
-         * @type {ImpactWorldWalls}
+         * @type {Phaser.Physics.Impact.WorldWalls}
          * @since 3.0.0
          */
         this.walls = { left: null, right: null, top: null, bottom: null };
@@ -591,8 +592,8 @@ var World = new Class({
      * @method Phaser.Physics.Impact.World#update
      * @since 3.0.0
      *
-     * @param {number} time - [description]
-     * @param {number} delta - [description]
+     * @param {number} time - The current time. Either a High Resolution Timer value if it comes from Request Animation Frame, or Date.now if using SetTimeout.
+     * @param {number} delta - The delta time in ms since the last frame. This is a smoothed and capped value based on the FPS rate.
      */
     update: function (time, delta)
     {
@@ -632,7 +633,7 @@ var World = new Class({
         {
             body = bodies[i];
 
-            if (!body.skipHash())
+            if (body && !body.skipHash())
             {
                 this.checkHash(body, hash, size);
             }
@@ -648,7 +649,7 @@ var World = new Class({
             {
                 body = bodies[i];
 
-                if (body.willDrawDebug())
+                if (body && body.willDrawDebug())
                 {
                     body.drawDebug(graphics);
                 }

@@ -6,6 +6,7 @@
 
 var Class = require('../../utils/Class');
 var Contains = require('./Contains');
+var GetPoints = require('./GetPoints');
 
 /**
  * @classdesc
@@ -50,15 +51,15 @@ var Polygon = new Class({
     },
 
     /**
-     * [description]
+     * Check to see if the Polygon contains the given x / y coordinates.
      *
      * @method Phaser.Geom.Polygon#contains
      * @since 3.0.0
      *
-     * @param {number} x - [description]
-     * @param {number} y - [description]
+     * @param {number} x - The x coordinate to check within the polygon.
+     * @param {number} y - The y coordinate to check within the polygon.
      *
-     * @return {boolean} [description]
+     * @return {boolean} `true` if the coordinates are within the polygon, otherwise `false`.
      */
     contains: function (x, y)
     {
@@ -94,9 +95,8 @@ var Polygon = new Class({
             return this;
         }
 
-        var entry;
-        var y0 = Number.MAX_VALUE;
         var p;
+        var y0 = Number.MAX_VALUE;
 
         //  The points argument is an array, so iterate through it
         for (var i = 0; i < points.length; i++)
@@ -109,7 +109,7 @@ var Polygon = new Class({
                 p.y = points[i + 1];
                 i++;
             }
-            else if (Array.isArray(entry))
+            else if (Array.isArray(points[i]))
             {
                 //  An array of arrays?
                 p.x = points[i][0];
@@ -141,7 +141,7 @@ var Polygon = new Class({
      * @method Phaser.Geom.Polygon#calculateArea
      * @since 3.0.0
      *
-     * @return {number} [description]
+     * @return {number} The area of the polygon.
      */
     calculateArea: function ()
     {
@@ -172,6 +172,24 @@ var Polygon = new Class({
         this.area = -sum * 0.5;
 
         return this.area;
+    },
+
+    /**
+     * Returns an array of Point objects containing the coordinates of the points around the perimeter of the Polygon,
+     * based on the given quantity or stepRate values.
+     *
+     * @method Phaser.Geom.Polygon#getPoints
+     * @since 3.12.0
+     *
+     * @param {integer} quantity - The amount of points to return. If a falsey value the quantity will be derived from the `stepRate` instead.
+     * @param {number} [stepRate] - Sets the quantity by getting the perimeter of the Polygon and dividing it by the stepRate.
+     * @param {array} [output] - An array to insert the points in to. If not provided a new array will be created.
+     *
+     * @return {Phaser.Geom.Point[]} An array of Point objects pertaining to the points around the perimeter of the Polygon.
+     */
+    getPoints: function (quantity, step, output)
+    {
+        return GetPoints(this, quantity, step, output);
     }
 
 });

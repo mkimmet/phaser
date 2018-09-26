@@ -409,8 +409,16 @@ var Tween = new Class({
      */
     restart: function ()
     {
-        this.stop();
-        this.play();
+        if (this.state === TWEEN_CONST.REMOVED)
+        {
+            this.seek(0);
+            this.parent.makeActive(this);
+        }
+        else
+        {
+            this.stop();
+            this.play();
+        }
     },
 
     /**
@@ -475,7 +483,8 @@ var Tween = new Class({
     },
 
     /**
-     * [description]
+     * Called by TweenManager.preUpdate as part of its loop to check pending and active tweens.
+     * Should not be called directly.
      *
      * @method Phaser.Tweens.Tween#init
      * @since 3.0.0
@@ -511,6 +520,7 @@ var Tween = new Class({
         if (this.paused && !this.parentIsTimeline)
         {
             this.state = TWEEN_CONST.PENDING_ADD;
+            this._pausedState = TWEEN_CONST.INIT;
 
             return false;
         }
@@ -664,6 +674,8 @@ var Tween = new Class({
 
                 onStart.func.apply(onStart.scope, onStart.params);
             }
+
+            this.parent.makeActive(this);
         }
     },
 
@@ -726,6 +738,10 @@ var Tween = new Class({
 
             this.state = this._pausedState;
         }
+        else
+        {
+            this.play();
+        }
 
         return this;
     },
@@ -736,7 +752,7 @@ var Tween = new Class({
      * @method Phaser.Tweens.Tween#seek
      * @since 3.0.0
      *
-     * @param {float} toPosition - A value between 0 and 1.
+     * @param {number} toPosition - A value between 0 and 1.
      */
     seek: function (toPosition)
     {
@@ -869,7 +885,7 @@ var Tween = new Class({
      * @method Phaser.Tweens.Tween#stop
      * @since 3.0.0
      *
-     * @param {float} [resetTo] - A value between 0 and 1.
+     * @param {number} [resetTo] - A value between 0 and 1.
      */
     stop: function (resetTo)
     {
@@ -883,6 +899,12 @@ var Tween = new Class({
 
         if (this.state !== TWEEN_CONST.REMOVED)
         {
+            if (this.state === TWEEN_CONST.PAUSED || this.state === TWEEN_CONST.PENDING_ADD)
+            {
+                this.parent._destroy.push(this);
+                this.parent._toProcess++;
+            }
+
             this.state = TWEEN_CONST.PENDING_REMOVE;
         }
     },
@@ -894,7 +916,7 @@ var Tween = new Class({
      * @since 3.0.0
      *
      * @param {number} timestamp - [description]
-     * @param {number} delta - [description]
+     * @param {number} delta - The delta time in ms since the last frame. This is a smoothed and capped value based on the FPS rate.
      *
      * @return {boolean} Returns `true` if this Tween has finished and should be removed from the Tween Manager, otherwise returns `false`.
      */

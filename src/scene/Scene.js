@@ -16,7 +16,7 @@ var Systems = require('./Systems');
  * @constructor
  * @since 3.0.0
  *
- * @param {(string|SettingsConfig)} config - Scene specific configuration settings.
+ * @param {(string|Phaser.Scenes.Settings.Config)} config - Scene specific configuration settings.
  */
 var Scene = new Class({
 
@@ -114,16 +114,6 @@ var Scene = new Class({
         this.cameras;
 
         /**
-         * A scene level 3D Camera System.
-         * This property will only be available if defined in the Scene Injection Map.
-         *
-         * @name Phaser.Scene#cameras3d
-         * @type {Phaser.Cameras.Sprite3D.CameraManager}
-         * @since 3.0.0
-         */
-        this.cameras3d;
-
-        /**
          * A scene level Game Object Factory.
          * This property will only be available if defined in the Scene Injection Map.
          *
@@ -168,7 +158,7 @@ var Scene = new Class({
          * This property will only be available if defined in the Scene Injection Map and the plugin is installed.
          *
          * @name Phaser.Scene#lights
-         * @type {Phaser.GameObjects.DisplayList}
+         * @type {Phaser.GameObjects.LightsManager}
          * @since 3.0.0
          */
         this.lights;
@@ -261,8 +251,8 @@ var Scene = new Class({
      * @override
      * @since 3.0.0
      *
-     * @param {number} time - [description]
-     * @param {number} delta - [description]
+     * @param {number} time - The current time. Either a High Resolution Timer value if it comes from Request Animation Frame, or Date.now if using SetTimeout.
+     * @param {number} delta - The delta time in ms since the last frame. This is a smoothed and capped value based on the FPS rate.
      */
     update: function ()
     {

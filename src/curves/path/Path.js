@@ -91,7 +91,7 @@ var Path = new Class({
         /**
          * [description]
          *
-         * @name {Phaser.Curves.Path#startPoint
+         * @name Phaser.Curves.Path#startPoint
          * @type {Phaser.Math.Vector2}
          * @since 3.0.0
          */
@@ -100,7 +100,7 @@ var Path = new Class({
         /**
          * [description]
          *
-         * @name {Phaser.Curves.Path#_tmpVec2A
+         * @name Phaser.Curves.Path#_tmpVec2A
          * @type {Phaser.Math.Vector2}
          * @private
          * @since 3.0.0
@@ -110,7 +110,7 @@ var Path = new Class({
         /**
          * [description]
          *
-         * @name {Phaser.Curves.Path#_tmpVec2B
+         * @name Phaser.Curves.Path#_tmpVec2B
          * @type {Phaser.Math.Vector2}
          * @private
          * @since 3.0.0
@@ -186,20 +186,18 @@ var Path = new Class({
         return this;
     },
 
-    //  Creates a cubic bezier curve starting at the previous end point and ending at p3, using p1 and p2 as control points
-
     /**
-     * [description]
+     * Creates a cubic bezier curve starting at the previous end point and ending at p3, using p1 and p2 as control points.
      *
      * @method Phaser.Curves.Path#cubicBezierTo
      * @since 3.0.0
      *
-     * @param {number} x - [description]
-     * @param {number} y - [description]
-     * @param {Phaser.Math.Vector2} control1X - [description]
-     * @param {Phaser.Math.Vector2} control1Y - [description]
-     * @param {Phaser.Math.Vector2} control2X - [description]
-     * @param {Phaser.Math.Vector2} control2Y - [description]
+     * @param {(number|Phaser.Math.Vector2)} x - The x coordinate of the end point. Or, if a Vec2, the p1 value.
+     * @param {(number|Phaser.Math.Vector2)} y - The y coordinate of the end point. Or, if a Vec2, the p2 value.
+     * @param {(number|Phaser.Math.Vector2)} control1X - The x coordinate of the first control point. Or, if a Vec2, the p3 value.
+     * @param {number} [control1Y] - The y coordinate of the first control point. Not used if vec2s are provided as the first 3 arguments.
+     * @param {number} [control2X] - The x coordinate of the second control point. Not used if vec2s are provided as the first 3 arguments.
+     * @param {number} [control2Y] - The y coordinate of the second control point. Not used if vec2s are provided as the first 3 arguments.
      *
      * @return {Phaser.Curves.Path} [description]
      */
@@ -560,7 +558,7 @@ var Path = new Class({
      * @method Phaser.Curves.Path#getPoints
      * @since 3.0.0
      *
-     * @param {integer} [divisions=12] - [description]
+     * @param {integer} [divisions=12] - Get random point on path.
      *
      * @return {Phaser.Math.Vector2[]} [description]
      */
@@ -616,7 +614,7 @@ var Path = new Class({
      *
      * @generic {Phaser.Math.Vector2} O - [out,$return]
      *
-     * @param {Phaser.Math.Vector2} [out] - [description]
+     * @param {Phaser.Math.Vector2} [out] - `Vector2` instance that should be used for storing the result. If `undefined` a new `Vector2` will be created.
      *
      * @return {Phaser.Math.Vector2} [description]
      */

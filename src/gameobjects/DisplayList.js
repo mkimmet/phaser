@@ -6,12 +6,16 @@
 
 var Class = require('../utils/Class');
 var List = require('../structs/List');
-var PluginManager = require('../boot/PluginManager');
+var PluginCache = require('../plugins/PluginCache');
 var StableSort = require('../utils/array/StableSort');
 
 /**
  * @classdesc
- * [description]
+ * The Display List plugin.
+ *
+ * Display Lists belong to a Scene and maintain the list of Game Objects to render every frame.
+ *
+ * Some of these Game Objects may also be part of the Scene's [Update List]{@link Phaser.GameObjects.UpdateList}, for updating.
  *
  * @class DisplayList
  * @extends Phaser.Structs.List.<Phaser.GameObjects.GameObject>
@@ -19,7 +23,7 @@ var StableSort = require('../utils/array/StableSort');
  * @constructor
  * @since 3.0.0
  *
- * @param {Phaser.Scene} scene - [description]
+ * @param {Phaser.Scene} scene - The Scene that this Display List belongs to.
  */
 var DisplayList = new Class({
 
@@ -32,7 +36,7 @@ var DisplayList = new Class({
         List.call(this, scene);
 
         /**
-         * [description]
+         * The flag the determines whether Game Objects should be sorted when `depthSort()` is called.
          *
          * @name Phaser.GameObjects.DisplayList#sortChildrenFlag
          * @type {boolean}
@@ -42,7 +46,7 @@ var DisplayList = new Class({
         this.sortChildrenFlag = false;
 
         /**
-         * [description]
+         * The Scene that this Display List belongs to.
          *
          * @name Phaser.GameObjects.DisplayList#scene
          * @type {Phaser.Scene}
@@ -51,7 +55,7 @@ var DisplayList = new Class({
         this.scene = scene;
 
         /**
-         * [description]
+         * The Scene's Systems.
          *
          * @name Phaser.GameObjects.DisplayList#systems
          * @type {Phaser.Scenes.Systems}
@@ -59,24 +63,35 @@ var DisplayList = new Class({
          */
         this.systems = scene.sys;
 
-        if (!scene.sys.settings.isBooted)
-        {
-            scene.sys.events.once('boot', this.boot, this);
-        }
+        scene.sys.events.once('boot', this.boot, this);
+        scene.sys.events.on('start', this.start, this);
     },
 
     /**
-     * [description]
+     * This method is called automatically, only once, when the Scene is first created.
+     * Do not invoke it directly.
      *
      * @method Phaser.GameObjects.DisplayList#boot
-     * @since 3.0.0
+     * @private
+     * @since 3.5.1
      */
     boot: function ()
     {
-        var eventEmitter = this.systems.events;
+        this.systems.events.once('destroy', this.destroy, this);
+    },
 
-        eventEmitter.on('shutdown', this.shutdown, this);
-        eventEmitter.on('destroy', this.destroy, this);
+    /**
+     * This method is called automatically by the Scene when it is starting up.
+     * It is responsible for creating local systems, properties and listening for Scene events.
+     * Do not invoke it directly.
+     *
+     * @method Phaser.GameObjects.DisplayList#start
+     * @private
+     * @since 3.5.0
+     */
+    start: function ()
+    {
+        this.systems.events.once('shutdown', this.shutdown, this);
     },
 
     /**
@@ -107,15 +122,15 @@ var DisplayList = new Class({
     },
 
     /**
-     * [description]
+     * Compare the depth of two Game Objects.
      *
      * @method Phaser.GameObjects.DisplayList#sortByDepth
      * @since 3.0.0
      *
-     * @param {Phaser.GameObjects.GameObject} childA - [description]
-     * @param {Phaser.GameObjects.GameObject} childB - [description]
+     * @param {Phaser.GameObjects.GameObject} childA - The first Game Object.
+     * @param {Phaser.GameObjects.GameObject} childB - The second Game Object.
      *
-     * @return {integer} [description]
+     * @return {integer} The difference between the depths of each Game Object.
      */
     sortByDepth: function (childA, childB)
     {
@@ -123,15 +138,15 @@ var DisplayList = new Class({
     },
 
     /**
-     * Given an array of Game Objects, sort the array and return it,
-     * so that the objects are in index order with the lowest at the bottom.
+     * Given an array of Game Objects, sort the array and return it, so that
+     * the objects are in index order with the lowest at the bottom.
      *
      * @method Phaser.GameObjects.DisplayList#sortGameObjects
      * @since 3.0.0
      *
-     * @param {Phaser.GameObjects.GameObject[]} gameObjects - [description]
+     * @param {Phaser.GameObjects.GameObject[]} gameObjects - The array of Game Objects to sort.
      *
-     * @return {array} [description]
+     * @return {array} The sorted array of Game Objects.
      */
     sortGameObjects: function (gameObjects)
     {
@@ -143,24 +158,79 @@ var DisplayList = new Class({
     },
 
     /**
+     * Get the top-most Game Object in the given array of Game Objects, after sorting it.
+     *
      * Note that the given array is sorted in place, even though it isn't returned directly it will still be updated.
      *
      * @method Phaser.GameObjects.DisplayList#getTopGameObject
      * @since 3.0.0
      *
-     * @param {Phaser.GameObjects.GameObject[]} gameObjects - [description]
+     * @param {Phaser.GameObjects.GameObject[]} gameObjects - The array of Game Objects.
      *
-     * @return {Phaser.GameObjects.GameObject} The top-most Game Object on the Display List.
+     * @return {Phaser.GameObjects.GameObject} The top-most Game Object in the array of Game Objects.
      */
     getTopGameObject: function (gameObjects)
     {
         this.sortGameObjects(gameObjects);
 
         return gameObjects[gameObjects.length - 1];
+    },
+
+    /**
+     * All members of the group.
+     *
+     * @method Phaser.GameObjects.DisplayList#getChildren
+     * @since 3.12.0
+     *
+     * @return {Phaser.GameObjects.GameObject[]} The group members.
+     */
+    getChildren: function ()
+    {
+        return this.list;
+    },
+
+    /**
+     * The Scene that owns this plugin is shutting down.
+     * We need to kill and reset all internal properties as well as stop listening to Scene events.
+     *
+     * @method Phaser.GameObjects.DisplayList#shutdown
+     * @private
+     * @since 3.0.0
+     */
+    shutdown: function ()
+    {
+        var i = this.list.length;
+
+        while (i--)
+        {
+            this.list[i].destroy(true);
+        }
+
+        this.list.length = 0;
+
+        this.systems.events.off('shutdown', this.shutdown, this);
+    },
+
+    /**
+     * The Scene that owns this plugin is being destroyed.
+     * We need to shutdown and then kill off all external references.
+     *
+     * @method Phaser.GameObjects.DisplayList#destroy
+     * @private
+     * @since 3.0.0
+     */
+    destroy: function ()
+    {
+        this.shutdown();
+
+        this.scene.sys.events.off('start', this.start, this);
+
+        this.scene = null;
+        this.systems = null;
     }
 
 });
 
-PluginManager.register('DisplayList', DisplayList, 'displayList');
+PluginCache.register('DisplayList', DisplayList, 'displayList');
 
 module.exports = DisplayList;

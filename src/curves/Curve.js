@@ -117,7 +117,7 @@ var Curve = new Class({
      * @method Phaser.Curves.Curve#draw
      * @since 3.0.0
      *
-     * @generic {Phaser.GameObjects.Graphics} G - [out,$return]
+     * @generic {Phaser.GameObjects.Graphics} G - [graphics,$return]
      *
      * @param {Phaser.GameObjects.Graphics} graphics - The Graphics instance onto which this curve will be drawn.
      * @param {integer} [pointsTotal=32] - The resolution of the curve. The higher the value the smoother it will render, at the cost of rendering performance.
@@ -131,7 +131,7 @@ var Curve = new Class({
         //  So you can chain graphics calls
         return graphics.strokePoints(this.getPoints(pointsTotal));
     },
-
+    
     /**
      * Returns a Rectangle where the position and dimensions match the bounds of this Curve.
      *
@@ -278,7 +278,7 @@ var Curve = new Class({
      *
      * @generic {Phaser.Math.Vector2} O - [out,$return]
      *
-     * @param {float} u - [description]
+     * @param {number} u - [description]
      * @param {Phaser.Math.Vector2} [out] - [description]
      *
      * @return {Phaser.Math.Vector2} [description]
@@ -434,7 +434,7 @@ var Curve = new Class({
      *
      * @generic {Phaser.Math.Vector2} O - [out,$return]
      *
-     * @param {float} u - [description]
+     * @param {number} u - [description]
      * @param {Phaser.Math.Vector2} [out] - [description]
      *
      * @return {Phaser.Math.Vector2} [description]
@@ -456,7 +456,7 @@ var Curve = new Class({
      * @param {integer} distance - [description]
      * @param {integer} [divisions] - [description]
      *
-     * @return {float} [description]
+     * @return {number} [description]
      */
     getTFromDistance: function (distance, divisions)
     {
@@ -476,7 +476,7 @@ var Curve = new Class({
      * @method Phaser.Curves.Curve#getUtoTmapping
      * @since 3.0.0
      *
-     * @param {float} u - [description]
+     * @param {number} u - [description]
      * @param {integer} distance - [description]
      * @param {integer} [divisions] - [description]
      *

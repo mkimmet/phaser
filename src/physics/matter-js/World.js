@@ -232,21 +232,16 @@ var World = new Class({
 
         MatterEvents.on(engine, 'beforeUpdate', function (event)
         {
-
             _this.emit('beforeupdate', event);
-
         });
 
         MatterEvents.on(engine, 'afterUpdate', function (event)
         {
-
             _this.emit('afterupdate', event);
-
         });
 
         MatterEvents.on(engine, 'collisionStart', function (event)
         {
-
             var pairs = event.pairs;
             var bodyA;
             var bodyB;
@@ -258,12 +253,10 @@ var World = new Class({
             }
 
             _this.emit('collisionstart', event, bodyA, bodyB);
-
         });
 
         MatterEvents.on(engine, 'collisionActive', function (event)
         {
-
             var pairs = event.pairs;
             var bodyA;
             var bodyB;
@@ -275,12 +268,10 @@ var World = new Class({
             }
 
             _this.emit('collisionactive', event, bodyA, bodyB);
-
         });
 
         MatterEvents.on(engine, 'collisionEnd', function (event)
         {
-
             var pairs = event.pairs;
             var bodyA;
             var bodyB;
@@ -292,7 +283,6 @@ var World = new Class({
             }
 
             _this.emit('collisionend', event, bodyA, bodyB);
-
         });
     },
 
@@ -643,8 +633,8 @@ var World = new Class({
      * @method Phaser.Physics.Matter.World#update
      * @since 3.0.0
      *
-     * @param {number} time - [description]
-     * @param {number} delta - [description]
+     * @param {number} time - The current time. Either a High Resolution Timer value if it comes from Request Animation Frame, or Date.now if using SetTimeout.
+     * @param {number} delta - The delta time in ms since the last frame. This is a smoothed and capped value based on the FPS rate.
      */
     update: function (time, delta)
     {
@@ -738,7 +728,7 @@ var World = new Class({
         {
             if (!bodies[i].render.visible)
             {
-                return;
+                continue;
             }
 
             // Handle drawing both single bodies and compound bodies. If compound, draw both the
@@ -894,6 +884,10 @@ var World = new Class({
      */
     shutdown: function ()
     {
+        MatterEvents.off(this.engine);
+
+        this.removeAllListeners();
+
         MatterWorld.clear(this.localWorld, false);
 
         Engine.clear(this.engine);

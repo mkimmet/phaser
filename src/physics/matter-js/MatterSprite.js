@@ -5,7 +5,6 @@
  */
 
 var AnimationComponent = require('../../gameobjects/components/Animation');
-var Bodies = require('./lib/factory/Bodies');
 var Class = require('../../utils/Class');
 var Components = require('./components');
 var GameObject = require('../../gameobjects/GameObject');
@@ -45,7 +44,6 @@ var Vector2 = require('../../math/Vector2');
  * @extends Phaser.Physics.Matter.Components.Transform
  * @extends Phaser.Physics.Matter.Components.Velocity
  * @extends Phaser.GameObjects.Components.Alpha
- * @extends Phaser.GameObjects.Components.Animation
  * @extends Phaser.GameObjects.Components.BlendMode
  * @extends Phaser.GameObjects.Components.Depth
  * @extends Phaser.GameObjects.Components.Flip
@@ -120,20 +118,13 @@ var MatterSprite = new Class({
 
         var shape = GetFastValue(options, 'shape', null);
 
-        if (!shape)
+        if (shape)
         {
-            this.body = Bodies.rectangle(x, y, this.width, this.height, options);
-
-            this.body.gameObject = this;
-
-            if (GetFastValue(options, 'addToWorld', true))
-            {
-                world.add(this.body);
-            }
+            this.setBody(shape, options);
         }
         else
         {
-            this.setBody(shape, options);
+            this.setRectangle(this.width, this.height, options);
         }
 
         this.setPosition(x, y);

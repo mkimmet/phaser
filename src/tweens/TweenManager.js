@@ -6,12 +6,10 @@
 
 var Class = require('../utils/Class');
 var NumberTweenBuilder = require('./builders/NumberTweenBuilder');
-var PluginManager = require('../boot/PluginManager');
+var PluginCache = require('../plugins/PluginCache');
 var TimelineBuilder = require('./builders/TimelineBuilder');
 var TWEEN_CONST = require('./tween/const');
 var TweenBuilder = require('./builders/TweenBuilder');
-
-//  Phaser.Tweens.TweenManager
 
 /**
  * @classdesc
@@ -47,11 +45,6 @@ var TweenManager = new Class({
          * @since 3.0.0
          */
         this.systems = scene.sys;
-
-        if (!scene.sys.settings.isBooted)
-        {
-            scene.sys.events.once('boot', this.boot, this);
-        }
 
         /**
          * [description]
@@ -113,22 +106,40 @@ var TweenManager = new Class({
          * @since 3.0.0
          */
         this._toProcess = 0;
+
+        scene.sys.events.once('boot', this.boot, this);
+        scene.sys.events.on('start', this.start, this);
     },
 
     /**
-     * [description]
+     * This method is called automatically, only once, when the Scene is first created.
+     * Do not invoke it directly.
      *
      * @method Phaser.Tweens.TweenManager#boot
-     * @since 3.0.0
+     * @private
+     * @since 3.5.1
      */
     boot: function ()
+    {
+        this.systems.events.once('destroy', this.destroy, this);
+    },
+
+    /**
+     * This method is called automatically by the Scene when it is starting up.
+     * It is responsible for creating local systems, properties and listening for Scene events.
+     * Do not invoke it directly.
+     *
+     * @method Phaser.Tweens.TweenManager#start
+     * @private
+     * @since 3.5.0
+     */
+    start: function ()
     {
         var eventEmitter = this.systems.events;
 
         eventEmitter.on('preupdate', this.preUpdate, this);
         eventEmitter.on('update', this.update, this);
-        eventEmitter.on('shutdown', this.shutdown, this);
-        eventEmitter.on('destroy', this.destroy, this);
+        eventEmitter.once('shutdown', this.shutdown, this);
 
         this.timeScale = 1;
     },
@@ -264,6 +275,7 @@ var TweenManager = new Class({
 
         var list = this._destroy;
         var active = this._active;
+        var pending = this._pending;
         var i;
         var tween;
 
@@ -275,7 +287,18 @@ var TweenManager = new Class({
             //  Remove from the 'active' array
             var idx = active.indexOf(tween);
 
-            if (idx !== -1)
+            if (idx === -1)
+            {
+                //  Not in the active array, is it in pending instead?
+                idx = pending.indexOf(tween);
+
+                if (idx > -1)
+                {
+                    tween.state = TWEEN_CONST.REMOVED;
+                    pending.splice(idx, 1);
+                }
+            }
+            else
             {
                 tween.state = TWEEN_CONST.REMOVED;
                 active.splice(idx, 1);
@@ -321,7 +344,7 @@ var TweenManager = new Class({
      * @since 3.0.0
      *
      * @param {number} timestamp - [description]
-     * @param {number} delta - [description]
+     * @param {number} delta - The delta time in ms since the last frame. This is a smoothed and capped value based on the FPS rate.
      */
     update: function (timestamp, delta)
     {
@@ -463,7 +486,7 @@ var TweenManager = new Class({
             {
                 tween = list[i];
 
-                for (var t = 0; t < target.length; i++)
+                for (var t = 0; t < target.length; t++)
                 {
                     if (tween.hasTarget(target[t]))
                     {
@@ -604,7 +627,7 @@ var TweenManager = new Class({
      * @method Phaser.Tweens.TweenManager#setGlobalTimeScale
      * @since 3.0.0
      *
-     * @param {float} value - [description]
+     * @param {number} value - [description]
      *
      * @return {Phaser.Tweens.TweenManager} [description]
      */
@@ -616,7 +639,8 @@ var TweenManager = new Class({
     },
 
     /**
-     * Scene that owns this manager is shutting down.
+     * The Scene that owns this plugin is shutting down.
+     * We need to kill and reset all internal properties as well as stop listening to Scene events.
      *
      * @method Phaser.Tweens.TweenManager#shutdown
      * @since 3.0.0
@@ -631,10 +655,17 @@ var TweenManager = new Class({
         this._destroy = [];
 
         this._toProcess = 0;
+
+        var eventEmitter = this.systems.events;
+
+        eventEmitter.off('preupdate', this.preUpdate, this);
+        eventEmitter.off('update', this.update, this);
+        eventEmitter.off('shutdown', this.shutdown, this);
     },
 
     /**
-     * [description]
+     * The Scene that owns this plugin is being destroyed.
+     * We need to shutdown and then kill off all external references.
      *
      * @method Phaser.Tweens.TweenManager#destroy
      * @since 3.0.0
@@ -642,10 +673,15 @@ var TweenManager = new Class({
     destroy: function ()
     {
         this.shutdown();
+
+        this.scene.sys.events.off('start', this.start, this);
+
+        this.scene = null;
+        this.systems = null;
     }
 
 });
 
-PluginManager.register('TweenManager', TweenManager, 'tweens');
+PluginCache.register('TweenManager', TweenManager, 'tweens');
 
 module.exports = TweenManager;

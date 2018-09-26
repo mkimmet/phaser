@@ -13,10 +13,11 @@ var WorldToTileY = require('./WorldToTileY');
  * false if there is no tile or if the tile at that location has an index of -1.
  *
  * @function Phaser.Tilemaps.Components.HasTileAtWorldXY
+ * @private
  * @since 3.0.0
  *
- * @param {number} worldX - [description]
- * @param {number} worldY - [description]
+ * @param {number} worldX - The X coordinate of the world position.
+ * @param {number} worldY - The Y coordinate of the world position.
  * @param {Phaser.Cameras.Scene2D.Camera} [camera=main camera] - [description]
  * @param {Phaser.Tilemaps.LayerData} layer - The Tilemap Layer to act upon.
  * 
